@@ -386,7 +386,7 @@ function computeFunnel(deals, pl, stages, wonNames, lostNames) {
     const adv   = ent.filter(d=>later.some(k=>d.stages[k]));
     const w     = ent.filter(d=>wonKeys.some(k=>d.stages[k]));
     res.push({ stage:body[i], entered:ent.length, advanced:adv.length, won:w.length,
-               convRate: adv.length/ent.length, winRate: w.length/ent.length,
+               conversionRate: adv.length/ent.length, winRate: w.length/ent.length,
                dropRate: 1-adv.length/ent.length });
   }
   return { stages: res, totalWon: wonCount };

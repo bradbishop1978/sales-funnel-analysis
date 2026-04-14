@@ -27,10 +27,12 @@ CSV file → PapaParse → detectSchema() → buildDeals() → compute*() → re
 **Deal model (`buildDeals`)** — for each row, reads `Date entered` / `Date exited` columns per stage to produce `deal.stages[key] = { entered, exited, days }`. Primary pipeline is inferred from which pipeline has the most stage-entry hits for that deal.
 
 **Compute functions** — pure functions, each takes `(deals, pipelineName, stages, wonNames, lostNames)`:
-- `computeFunnel` — conversion/drop rates per body stage
+- `computeFunnel` — returns `{ stages[], totalWon }`. Each stage object uses the property name `conversionRate` (not `convRate`) — these must stay in sync with `renderFunnel` which reads `f.conversionRate` and `f.dropRate`.
 - `computeTime` — median + IQR per stage (flags high variance when IQR > 2× median)
 - `computeSignals` — win rate by stage in funnel order; inflection = delta > 0.15; also computes the cross-pipeline store card
 - `computeStale` — 75th-percentile days-in-stage from closed-lost deals; counts active deals currently over threshold
+
+**`summaryStats`** — computes the four benchmark cards. Needs `schema.stageMap` (not just `schema.pipelines`) to build `allWonKeys` for the close-date fallback. Signature is `summaryStats(deals, schema)`.
 
 **Rendering** — `renderFunnel` (CSS bars), `renderTimeChart` (Chart.js horizontal bar), `renderSignals` / `renderStale` (HTML tables). Chart instances are stored in `_charts{}` and destroyed before recreation to prevent memory leaks. Tab switching just toggles `.active` CSS class — all pipeline sections are pre-rendered on load.
 
