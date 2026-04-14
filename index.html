@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Funnel Analyzer</title>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --primary: #3b82f6;
+      --primary-dk: #1d4ed8;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    header{background:#0f172a;color:#fff;padding:14px 32px;display:flex;align-items:center;gap:12px}
+    header h1{font-size:1.2rem;font-weight:600}
+    .badge{background:#1e3a5f;color:#93c5fd;font-size:.72rem;padding:2px 8px;border-radius:100px}
+    .container{max-width:1380px;margin:0 auto;padding:24px 28px}
+
+    /* ── Upload ── */
+    #upload-zone{border:2px dashed #94a3b8;border-radius:var(--radius);background:#fff;padding:56px 40px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:20px}
+    #upload-zone:hover,#upload-zone.over{border-color:var(--primary);background:#eff6ff}
+    #upload-zone .ico{font-size:2.8rem;margin-bottom:10px}
+    #upload-zone h2{font-size:1.2rem;margin-bottom:6px}
+    #upload-zone p{color:var(--muted);font-size:.875rem}
+    #file-input{display:none}
+    .upload-btn{display:inline-block;margin-top:14px;padding:9px 22px;background:var(--primary);color:#fff;border-radius:8px;cursor:pointer;font-size:.875rem;font-weight:500;transition:background .2s}
+    .upload-btn:hover{background:var(--primary-dk)}
+
+    /* ── Loading ── */
+    #loading{display:none;text-align:center;padding:50px}
+    .spinner{width:38px;height:38px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ── Dashboard ── */
+    #dashboard{display:none}
+    .file-bar{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--border);border-radius:8px;padding:9px 16px;margin-bottom:18px;font-size:.85rem;color:var(--muted)}
+    .btn-sm{padding:5px 14px;background:#f1f5f9;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:.78rem;color:var(--text)}
+    .btn-sm:hover{background:var(--border)}
+
+    /* ── Quality banner ── */
+    .quality-banner{background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:11px 16px;margin-bottom:18px;font-size:.82rem;color:#92400e;display:flex;gap:10px}
+    .quality-banner ul{padding-left:18px;margin-top:3px}
+
+    /* ── Summary cards ── */
+    .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+    @media(max-width:900px){.summary-grid{grid-template-columns:repeat(2,1fr)}}
+    .stat-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+    .stat-card .lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:7px}
+    .stat-card .val{font-size:1.7rem;font-weight:700;line-height:1}
+    .stat-card .sub{font-size:.78rem;color:var(--muted);margin-top:5px}
+    .c-blue .val{color:var(--primary)}
+    .c-green .val{color:var(--success)}
+    .c-red .val{color:var(--danger)}
+
+    /* ── Store highlight ── */
+    .store-highlight{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;border-radius:10px;padding:18px 22px;margin-bottom:22px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:18px;align-items:center}
+    @media(max-width:900px){.store-highlight{grid-template-columns:1fr 1fr}}
+    .sh-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:#1d4ed8;font-weight:600;margin-bottom:3px}
+    .sh-val{font-size:1.4rem;font-weight:700;color:#1e3a5f}
+    .sh-note{font-size:.76rem;color:#3b82f6;margin-top:2px}
+    .sh-name{font-size:1rem;font-weight:600;color:#1e3a5f}
+    .sh-sub{font-size:.8rem;color:#3b82f6;margin-top:3px}
+
+    /* ── Tabs ── */
+    .tabs{display:flex;gap:2px;background:#e2e8f0;border-radius:10px;padding:4px;margin-bottom:22px;flex-wrap:wrap}
+    .tab-btn{padding:7px 16px;border-radius:7px;border:none;background:transparent;cursor:pointer;font-size:.85rem;font-weight:500;color:var(--muted);transition:all .15s;white-space:nowrap}
+    .tab-btn.active{background:#fff;color:var(--text);box-shadow:var(--shadow)}
+    .tab-btn:hover:not(.active){background:#f1f5f9;color:var(--text)}
+
+    /* ── Pipeline sections ── */
+    .pl-section{display:none}
+    .pl-section.active{display:block}
+
+    /* ── Section cards ── */
+    .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
+    .card-title{font-size:.975rem;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:8px}
+    .card-sub{font-size:.78rem;color:var(--muted);margin-bottom:18px}
+
+    /* ── Funnel ── */
+    .funnel-wrap{display:flex;flex-direction:column;align-items:center;gap:0;padding:4px 0}
+    .f-row{display:flex;flex-direction:column;align-items:center;width:100%}
+    .f-bar{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-radius:6px;color:#fff;font-size:.82rem;margin:1px auto;transition:width .4s ease;min-height:44px}
+    .f-bar .f-name{font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-right:8px}
+    .f-bar .f-count{opacity:.9;white-space:nowrap;margin-right:8px;font-size:.78rem}
+    .f-bar .f-pct{font-weight:700;white-space:nowrap;font-size:.9rem}
+    .f-drop{font-size:.72rem;color:var(--danger);text-align:center;padding:1px 0 2px;opacity:.85}
+    .f-won{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:8px 16px;text-align:center;font-size:.82rem;color:#166534;font-weight:500;margin-top:4px;width:60%}
+
+    /* ── Chart ── */
+    .chart-outer{position:relative}
+
+    /* ── Tables ── */
+    table{width:100%;border-collapse:collapse;font-size:.83rem}
+    th{background:#f8fafc;border-bottom:2px solid var(--border);padding:9px 13px;text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+    td{padding:9px 13px;border-bottom:1px solid var(--border);color:var(--text)}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:#f8fafc}
+
+    /* ── Badges ── */
+    .b-inflect{background:#dcfce7;color:#166534;font-size:.67rem;padding:2px 6px;border-radius:100px;font-weight:600;margin-left:5px;vertical-align:middle}
+    .b-warn{background:#fef3c7;color:#92400e;font-size:.7rem;padding:2px 7px;border-radius:100px;font-weight:600}
+    .b-danger{background:#fee2e2;color:#991b1b;font-size:.7rem;padding:2px 7px;border-radius:100px;font-weight:600}
+
+    /* ── Win bar ── */
+    .wbar{display:flex;align-items:center;gap:8px}
+    .wbar-track{flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden}
+    .wbar-fill{height:100%;background:var(--success);border-radius:3px}
+    .wbar-lbl{min-width:34px;text-align:right;font-size:.82rem}
+
+    /* ── Alert count ── */
+    .alert-dot{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:var(--danger);color:#fff;border-radius:50%;font-size:.7rem;font-weight:700}
+
+    /* ── Empty state ── */
+    .empty{text-align:center;padding:36px;color:var(--muted);font-size:.875rem}
+  </style>
+</head>
+<body>
+
+<header>
+  <div style="font-size:1.5rem">📊</div>
+  <h1>Sales Funnel Analyzer</h1>
+  <span class="badge">HubSpot CSV</span>
+</header>
+
+<div class="container">
+
+  <div id="upload-zone">
+    <div class="ico">📂</div>
+    <h2>Drop your HubSpot deals export here</h2>
+    <p>Accepts any HubSpot deal CSV. Pipelines and columns are auto-detected.</p>
+    <label class="upload-btn" for="file-input">Browse file</label>
+    <input type="file" id="file-input" accept=".csv">
+  </div>
+
+  <div id="loading">
+    <div class="spinner"></div>
+    <p style="color:var(--muted)">Analyzing funnel data…</p>
+  </div>
+
+  <div id="dashboard">
+    <div class="file-bar">
+      <span id="file-info">Ready</span>
+      <button class="btn-sm" onclick="resetTool()">↩ Load new file</button>
+    </div>
+    <div id="quality-wrap"></div>
+    <div class="summary-grid" id="summary-cards"></div>
+    <div id="store-wrap"></div>
+    <div class="tabs" id="tabs"></div>
+    <div id="pl-sections"></div>
+  </div>
+
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// GLOBALS
+// ─────────────────────────────────────────────
+let _charts = {};
+
+// ─────────────────────────────────────────────
+// UTILS
+// ─────────────────────────────────────────────
+function parseDate(s) {
+  if (!s || typeof s !== 'string' || !s.trim()) return null;
+  const m = s.trim().match(/^(\d{4})-(\d{2})-(\d{2})(?:\s+(\d{2}):(\d{2}))?/);
+  if (m) return new Date(+m[1], +m[2]-1, +m[3], +(m[4]||0), +(m[5]||0));
+  const d = new Date(s);
+  return isNaN(d) ? null : d;
+}
+
+function median(arr) {
+  const a = arr.filter(v => v != null && !isNaN(v));
+  if (!a.length) return null;
+  a.sort((x,y) => x-y);
+  const m = Math.floor(a.length/2);
+  return a.length%2 ? a[m] : (a[m-1]+a[m])/2;
+}
+
+function pct(arr, p) {
+  const a = arr.filter(v => v != null && !isNaN(v)).sort((x,y)=>x-y);
+  if (!a.length) return null;
+  const i = (p/100)*(a.length-1);
+  const lo = Math.floor(i), hi = Math.ceil(i);
+  return a[lo] + (a[hi]-a[lo])*(i-lo);
+}
+
+function fd(d) { // format days
+  if (d == null) return '—';
+  if (d < 1) return '<1d';
+  return Math.round(d)+'d';
+}
+
+function fp(v) { // format percent
+  if (v == null) return '—';
+  return Math.round(v*100)+'%';
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function sid(s) { // safe element id
+  return s.replace(/[^a-zA-Z0-9]/g,'_');
+}
+
+// ─────────────────────────────────────────────
+// SCHEMA DETECTION
+// ─────────────────────────────────────────────
+function detectSchema(headers) {
+  const stageCol = headers.find(h => /^deal\s*stage$/i.test(h.trim()))
+    || headers.find(h => /^pipeline\s*stage$/i.test(h.trim()))
+    || headers.find(h => /\bstage\b/i.test(h) && !/date|time|entered|exited|latest|cumul/i.test(h));
+
+  const re = /^Date entered "(.+) \((.+)\)"$/;
+  const headerSet = new Set(headers);
+  const pipelines = {}; // name → [stageName,...]
+  const stageMap = {};  // "stage (pipeline)" → {pipeline,stageName,enteredCol,exitedCol}
+
+  for (const h of headers) {
+    const m = h.trim().match(re);
+    if (!m) continue;
+    const stageName = m[1].trim(), pipeline = m[2].trim();
+    const key = `${stageName} (${pipeline})`;
+    const exitCol = `Date exited "${stageName} (${pipeline})"`;
+    if (!pipelines[pipeline]) pipelines[pipeline] = [];
+    if (!pipelines[pipeline].includes(stageName)) pipelines[pipeline].push(stageName);
+    stageMap[key] = { pipeline, stageName, enteredCol: h,
+      exitedCol: headerSet.has(exitCol) ? exitCol : null };
+  }
+
+  // Sort stages by numeric prefix
+  for (const pl of Object.keys(pipelines)) {
+    pipelines[pl].sort((a,b) => {
+      const na = parseFloat(a.match(/^(\d+(?:\.\d+)?)/)?.[1] ?? 999);
+      const nb = parseFloat(b.match(/^(\d+(?:\.\d+)?)/)?.[1] ?? 999);
+      return na !== nb ? na-nb : a.localeCompare(b);
+    });
+  }
+
+  const wonNames  = new Set(Object.values(stageMap).filter(i => /closed[\s-]*won/i.test(i.stageName)).map(i=>i.stageName));
+  const lostNames = new Set(Object.values(stageMap).filter(i => /closed[\s-]*lost/i.test(i.stageName)).map(i=>i.stageName));
+
+  // Store-equivalent stage
+  let storeStage = null;
+  for (const info of Object.values(stageMap)) {
+    if (/store/i.test(info.stageName) && !/closed/i.test(info.stageName)) { storeStage = info; break; }
+  }
+
+  return { stageCol, pipelines, stageMap, wonNames, lostNames, storeStage };
+}
+
+// ─────────────────────────────────────────────
+// BUILD DEALS
+// ─────────────────────────────────────────────
+function buildDeals(rows, schema) {
+  const { stageCol, stageMap, wonNames, lostNames } = schema;
+  const stageToInfos = {};
+  for (const info of Object.values(stageMap)) {
+    (stageToInfos[info.stageName] = stageToInfos[info.stageName]||[]).push(info);
+  }
+
+  let noHistory = 0;
+  const unknownStages = new Set();
+  const deals = rows.map(row => {
+    const cur = (stageCol ? row[stageCol]||'' : '').trim();
+    let outcome = 'active';
+    if (wonNames.has(cur) || /closed[\s-]*won/i.test(cur))  outcome = 'won';
+    else if (lostNames.has(cur) || /closed[\s-]*lost/i.test(cur)) outcome = 'lost';
+    if (cur && outcome==='active' && !stageToInfos[cur]) unknownStages.add(cur);
+
+    const stages = {};
+    const plHits = {};
+    let hasHist = false;
+
+    for (const [key, info] of Object.entries(stageMap)) {
+      const entered = parseDate(row[info.enteredCol]);
+      if (!entered) continue;
+      hasHist = true;
+      const exited = info.exitedCol ? parseDate(row[info.exitedCol]) : null;
+      const days = exited && exited > entered ? (exited-entered)/86400000 : null;
+      stages[key] = { entered, exited, days };
+      plHits[info.pipeline] = (plHits[info.pipeline]||0)+1;
+    }
+    if (!hasHist) noHistory++;
+
+    // primary pipeline
+    let primaryPipeline = null;
+    const matches = stageToInfos[cur];
+    if (matches?.length===1) primaryPipeline = matches[0].pipeline;
+    else if (Object.keys(plHits).length) {
+      primaryPipeline = Object.entries(plHits).sort((a,b)=>b[1]-a[1])[0][0];
+    }
+
+    return {
+      id: row['Record ID']||row['Deal ID']||'',
+      name: row['Deal Name']||row['Name']||'',
+      cur, outcome, primaryPipeline,
+      closeDate: parseDate(row['Close Date']||row['Close date']||''),
+      amount: parseFloat(row['Amount']||'')||null,
+      stages
+    };
+  });
+
+  return { deals, noHistory, unknownStages };
+}
+
+// ─────────────────────────────────────────────
+// SUMMARY STATS
+// ─────────────────────────────────────────────
+function summaryStats(deals, schema) {
+  const { pipelines, wonNames, lostNames } = schema;
+  const won  = deals.filter(d=>d.outcome==='won');
+  const lost = deals.filter(d=>d.outcome==='lost');
+
+  const lengths = won.map(d => {
+    const entries = Object.values(d.stages).map(s=>s.entered).filter(Boolean);
+    if (!entries.length || !d.closeDate) return null;
+    const first = new Date(Math.min(...entries.map(e=>e.getTime())));
+    const v = (d.closeDate - first)/86400000;
+    return v > 0 ? v : null;
+  }).filter(v=>v!=null);
+
+  let bestStage=null, bestRate=-1, worstStage=null, worstRate=-1;
+  for (const [pl, stages] of Object.entries(pipelines)) {
+    const body = stages.filter(s=>!wonNames.has(s)&&!lostNames.has(s));
+    const wonKeys = stages.filter(s=>wonNames.has(s)).map(s=>`${s} (${pl})`);
+    for (let i=0; i<body.length-1; i++) {
+      const key = `${body[i]} (${pl})`;
+      const later = [...body.slice(i+1).map(s=>`${s} (${pl})`), ...wonKeys];
+      const ent = deals.filter(d=>d.stages[key]);
+      if (ent.length < 5) continue;
+      const adv = ent.filter(d=>later.some(k=>d.stages[k]));
+      const rate = adv.length/ent.length;
+      if (rate > bestRate)  { bestRate=rate;  bestStage=body[i]; }
+      if ((1-rate) > worstRate) { worstRate=1-rate; worstStage=body[i]; }
+    }
+  }
+
+  return {
+    typicalLength: median(lengths),
+    winRate: (won.length+lost.length) > 0 ? won.length/(won.length+lost.length) : null,
+    total: deals.length, won: won.length, lost: lost.length,
+    active: deals.length-won.length-lost.length,
+    bestStage, bestRate, worstStage, worstRate
+  };
+}
+
+// ─────────────────────────────────────────────
+// FUNNEL
+// ─────────────────────────────────────────────
+function computeFunnel(deals, pl, stages, wonNames, lostNames) {
+  const body    = stages.filter(s=>!wonNames.has(s)&&!lostNames.has(s));
+  const wonKeys = stages.filter(s=>wonNames.has(s)).map(s=>`${s} (${pl})`);
+  const wonCount= deals.filter(d=>wonKeys.some(k=>d.stages[k])).length;
+  const res = [];
+  for (let i=0; i<body.length; i++) {
+    const key  = `${body[i]} (${pl})`;
+    const ent  = deals.filter(d=>d.stages[key]);
+    if (!ent.length) continue;
+    const later = [...body.slice(i+1).map(s=>`${s} (${pl})`), ...wonKeys];
+    const adv   = ent.filter(d=>later.some(k=>d.stages[k]));
+    const w     = ent.filter(d=>wonKeys.some(k=>d.stages[k]));
+    res.push({ stage:body[i], entered:ent.length, advanced:adv.length, won:w.length,
+               convRate: adv.length/ent.length, winRate: w.length/ent.length,
+               dropRate: 1-adv.length/ent.length });
+  }
+  return { stages: res, totalWon: wonCount };
+}
+
+// ─────────────────────────────────────────────
+// TIME IN STAGE
+// ─────────────────────────────────────────────
+function computeTime(deals, pl, stages) {
+  return stages.map(stage => {
+    const key = `${stage} (${pl})`;
+    const vals = deals.filter(d=>d.stages[key]?.days!=null).map(d=>d.stages[key].days);
+    if (!vals.length) return null;
+    const med = median(vals), q25=pct(vals,25), q75=pct(vals,75);
+    const iqr = q75!=null&&q25!=null ? q75-q25 : null;
+    return { stage, n:vals.length, median:med, q25, q75, iqr,
+             highVar: med!=null&&iqr!=null&&iqr>2*med };
+  }).filter(Boolean);
+}
+
+// ─────────────────────────────────────────────
+// CONVERSION SIGNALS
+// ─────────────────────────────────────────────
+function computeSignals(deals, pl, stages, wonNames, lostNames, schema) {
+  const body    = stages.filter(s=>!wonNames.has(s)&&!lostNames.has(s));
+  const wonKeys = stages.filter(s=>wonNames.has(s)).map(s=>`${s} (${pl})`);
+  const allWonKeys = Object.values(schema.stageMap)
+    .filter(i=>wonNames.has(i.stageName)).map(i=>`${i.stageName} (${i.pipeline})`);
+
+  let prev = 0;
+  const sigs = body.map(stage => {
+    const key = `${stage} (${pl})`;
+    const ent = deals.filter(d=>d.stages[key]);
+    if (ent.length < 3) return null;
+    const w = ent.filter(d=>wonKeys.some(k=>d.stages[k]));
+    const wr = w.length/ent.length;
+    const delta = wr-prev; prev = wr;
+    const daysArr = w.map(d => {
+      const se = d.stages[key]?.entered;
+      const we = wonKeys.map(k=>d.stages[k]?.entered).filter(Boolean);
+      if (!se||!we.length) return null;
+      const wd = new Date(Math.min(...we.map(x=>x.getTime())));
+      const v = (wd-se)/86400000;
+      return v>=0 ? v : null;
+    }).filter(v=>v!=null);
+    return { stage, entered:ent.length, won:w.length, winRate:wr, delta,
+             isInflect: delta>0.15, medDaysClose: median(daysArr) };
+  }).filter(Boolean);
+
+  // Store stage (global)
+  let storeCard = null;
+  if (schema.storeStage) {
+    const { stageName, pipeline } = schema.storeStage;
+    const sk = `${stageName} (${pipeline})`;
+    const sd = deals.filter(d=>d.stages[sk]);
+    if (sd.length) {
+      const sw = sd.filter(d=>allWonKeys.some(k=>d.stages[k]));
+      const da = sw.map(d => {
+        const se=d.stages[sk]?.entered;
+        const we=allWonKeys.map(k=>d.stages[k]?.entered).filter(Boolean);
+        if (!se||!we.length) return null;
+        const wd=new Date(Math.min(...we.map(x=>x.getTime())));
+        const v=(wd-se)/86400000; return v>=0?v:null;
+      }).filter(v=>v!=null);
+      storeCard = { stageName, pipeline, entered:sd.length, won:sw.length,
+        winRate:sw.length/sd.length, medDays:median(da) };
+    }
+  }
+
+  return { sigs, storeCard };
+}
+
+// ─────────────────────────────────────────────
+// STALE THRESHOLDS
+// ─────────────────────────────────────────────
+function computeStale(deals, pl, stages, wonNames, lostNames) {
+  const body     = stages.filter(s=>!wonNames.has(s)&&!lostNames.has(s));
+  const lostKeys = stages.filter(s=>lostNames.has(s)).map(s=>`${s} (${pl})`);
+  const lostD    = deals.filter(d=>lostKeys.some(k=>d.stages[k]));
+  const now      = Date.now();
+  return body.map(stage => {
+    const key = `${stage} (${pl})`;
+    const vals = lostD.filter(d=>d.stages[key]?.days!=null).map(d=>d.stages[key].days);
+    if (vals.length < 3) return null;
+    const thresh = pct(vals, 75);
+    const over = deals.filter(d => {
+      if (d.outcome!=='active') return false;
+      const sd = d.stages[key];
+      if (!sd?.entered||sd.exited) return false;
+      return thresh!=null && (now-sd.entered.getTime())/86400000 > thresh;
+    }).length;
+    return { stage, n:vals.length, med:median(vals), thresh, over };
+  }).filter(Boolean);
+}
+
+// ─────────────────────────────────────────────
+// RENDER HELPERS
+// ─────────────────────────────────────────────
+function renderSummaryCards(stats) {
+  document.getElementById('summary-cards').innerHTML = `
+    <div class="stat-card c-blue">
+      <div class="lbl">Typical Deal Length</div>
+      <div class="val">${stats.typicalLength!=null?Math.round(stats.typicalLength):'—'}<span style="font-size:.9rem;font-weight:400"> days</span></div>
+      <div class="sub">Median start-to-close (won deals)</div>
+    </div>
+    <div class="stat-card c-green">
+      <div class="lbl">Win Rate</div>
+      <div class="val">${fp(stats.winRate)}</div>
+      <div class="sub">${stats.won} won of ${stats.won+stats.lost} closed · ${stats.active} active</div>
+    </div>
+    <div class="stat-card c-green">
+      <div class="lbl">Best Conversion Stage</div>
+      <div class="val" style="font-size:.95rem;line-height:1.35">${esc(stats.bestStage||'—')}</div>
+      <div class="sub">${stats.bestRate>-1?fp(stats.bestRate)+' advance rate':''}</div>
+    </div>
+    <div class="stat-card c-red">
+      <div class="lbl">Biggest Drop-Off Stage</div>
+      <div class="val" style="font-size:.95rem;line-height:1.35">${esc(stats.worstStage||'—')}</div>
+      <div class="sub">${stats.worstRate>-1?fp(stats.worstRate)+' drop rate':''}</div>
+    </div>`;
+}
+
+function renderStoreCard(sc) {
+  const el = document.getElementById('store-wrap');
+  if (!sc) { el.innerHTML=''; return; }
+  el.innerHTML = `
+    <div class="store-highlight">
+      <div>
+        <div class="sh-title">Key Stage Spotlight</div>
+        <div class="sh-name">${esc(sc.stageName)}</div>
+        <div class="sh-sub">${esc(sc.pipeline)}</div>
+      </div>
+      <div>
+        <div class="sh-title">Deals Reaching It</div>
+        <div class="sh-val">${sc.entered.toLocaleString()}</div>
+        <div class="sh-note">total</div>
+      </div>
+      <div>
+        <div class="sh-title">Close Rate After</div>
+        <div class="sh-val">${fp(sc.winRate)}</div>
+        <div class="sh-note">${sc.won} closed won</div>
+      </div>
+      <div>
+        <div class="sh-title">Median Days to Close</div>
+        <div class="sh-val">${fd(sc.medDays)}</div>
+        <div class="sh-note">from stage entry</div>
+      </div>
+    </div>`;
+}
+
+function renderQuality(issues) {
+  const el = document.getElementById('quality-wrap');
+  if (!issues.length) { el.innerHTML=''; return; }
+  el.innerHTML = `<div class="quality-banner"><div>⚠️</div><div><strong>Data quality notes</strong><ul>${issues.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></div>`;
+}
+
+function renderFunnel(data, id) {
+  const el = document.getElementById(id);
+  if (!data.stages.length) { el.innerHTML='<div class="empty">Not enough data for this pipeline.</div>'; return; }
+  const maxEnt = Math.max(...data.stages.map(s=>s.entered));
+  const colors = ['#3b82f6','#6366f1','#8b5cf6','#a855f7','#ec4899','#f97316','#ef4444'];
+  let html = '<div class="funnel-wrap">';
+  data.stages.forEach((f,i) => {
+    const w = Math.max(35, Math.round(f.entered/maxEnt*85)+15);
+    const col = colors[i % colors.length];
+    const convPct = Math.round(f.conversionRate*100);
+    const dropPct = Math.round(f.dropRate*100);
+    html += `<div class="f-row">
+      <div class="f-bar" style="width:${w}%;background:${col}" title="${esc(f.stage)}: ${f.entered} deals, ${convPct}% advance">
+        <span class="f-name">${esc(f.stage)}</span>
+        <span class="f-count">${f.entered.toLocaleString()}</span>
+        <span class="f-pct">${convPct}% →</span>
+      </div>
+      ${i<data.stages.length-1&&dropPct>4 ? `<div class="f-drop">↓ ${dropPct}% drop-off</div>` : ''}
+    </div>`;
+  });
+  if (data.totalWon) {
+    html += `<div class="f-won">🏆 ${data.totalWon.toLocaleString()} Closed Won</div>`;
+  }
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function renderTimeChart(timeData, chartId) {
+  const canvas = document.getElementById(chartId);
+  if (!canvas) return;
+  if (_charts[chartId]) { _charts[chartId].destroy(); delete _charts[chartId]; }
+  if (!timeData.length) { canvas.parentElement.innerHTML='<div class="empty">No time data available.</div>'; return; }
+  const labels  = timeData.map(d=>d.stage);
+  const medians = timeData.map(d=>d.median!=null?+d.median.toFixed(1):null);
+  const colors  = timeData.map(d=>d.highVar?'#f59e0b':'#3b82f6');
+  _charts[chartId] = new Chart(canvas, {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{ label:'Median Days', data:medians, backgroundColor:colors, borderRadius:4, borderSkipped:false }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{afterLabel:ctx=>{
+          const d=timeData[ctx.dataIndex];
+          const lines=[`n = ${d.n} deals`];
+          if(d.q25!=null&&d.q75!=null) lines.push(`IQR: ${d.q25.toFixed(1)}d – ${d.q75.toFixed(1)}d`);
+          if(d.highVar) lines.push('⚠ High variance');
+          return lines;
+        }}}
+      },
+      scales:{
+        x:{title:{display:true,text:'Days',color:'#64748b'},grid:{color:'#f1f5f9'},ticks:{color:'#64748b'}},
+        y:{ticks:{color:'#64748b',font:{size:11},callback:(v,i)=>{const l=labels[i];return l.length>24?l.slice(0,22)+'…':l}},grid:{display:false}}
+      }
+    }
+  });
+}
+
+function renderSignals(sigs, containerId) {
+  const el = document.getElementById(containerId);
+  if (!sigs.length) { el.innerHTML='<div class="empty">Not enough data for conversion signals.</div>'; return; }
+  let html = `<table><thead><tr>
+    <th>Stage (funnel order)</th><th>Deals Entered</th><th>Close Rate</th><th>Rate Change</th><th>Median Days to Close</th>
+  </tr></thead><tbody>`;
+  for (const s of sigs) {
+    const inf = s.isInflect ? `<span class="b-inflect">↑ Key Inflection</span>` : '';
+    const chg = s.delta>0 ? `<span style="color:var(--success)">▲ ${fp(s.delta)}</span>`
+               : s.delta<0 ? `<span style="color:var(--danger)">▼ ${fp(Math.abs(s.delta))}</span>` : '—';
+    html += `<tr>
+      <td><strong>${esc(s.stage)}</strong>${inf}</td>
+      <td>${s.entered.toLocaleString()}</td>
+      <td><div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:${Math.round(s.winRate*100)}%"></div></div><span class="wbar-lbl">${fp(s.winRate)}</span></div></td>
+      <td>${chg}</td>
+      <td>${fd(s.medDaysClose)}</td>
+    </tr>`;
+  }
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+function renderStale(thresholds, containerId) {
+  const el = document.getElementById(containerId);
+  if (!thresholds.length) { el.innerHTML='<div class="empty">Not enough closed-lost data to compute thresholds.</div>'; return; }
+  let html = `<table><thead><tr>
+    <th>Stage</th><th>Lost Deals (sample)</th><th>Median Days (lost)</th><th>Flag Threshold</th><th>Active Deals Over Threshold</th>
+  </tr></thead><tbody>`;
+  for (const t of thresholds) {
+    const alert = t.over>0 ? `<span class="alert-dot">${t.over}</span> <span class="b-danger">at risk</span>` : '<span style="color:var(--muted)">0</span>';
+    html += `<tr>
+      <td><strong>${esc(t.stage)}</strong></td>
+      <td>${t.n}</td>
+      <td>${fd(t.med)}</td>
+      <td><span class="b-warn">⚑ ${fd(t.thresh)}</span></td>
+      <td>${alert}</td>
+    </tr>`;
+  }
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+// ─────────────────────────────────────────────
+// SWITCH TAB
+// ─────────────────────────────────────────────
+function switchTab(pl) {
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.pl-section').forEach(s=>s.classList.remove('active'));
+  const tb = document.getElementById('tab-'+sid(pl));
+  const sc = document.getElementById('pl-'+sid(pl));
+  if(tb) tb.classList.add('active');
+  if(sc) sc.classList.add('active');
+}
+
+// ─────────────────────────────────────────────
+// MAIN ANALYSIS
+// ─────────────────────────────────────────────
+function analyzeData(rows, headers, fileName) {
+  setTimeout(() => {
+    try {
+      const schema = detectSchema(headers);
+      const plNames = Object.keys(schema.pipelines);
+      if (!plNames.length) throw new Error('No pipeline stages detected. Check CSV format.');
+
+      const { deals, noHistory, unknownStages } = buildDeals(rows, schema);
+
+      // Quality issues
+      const issues = [];
+      if (noHistory>0) issues.push(`${noHistory} deal(s) had no stage-entry history and are excluded from funnel metrics.`);
+      if (unknownStages.size>0) issues.push(`${unknownStages.size} unrecognized Deal Stage value(s): ${[...unknownStages].slice(0,6).join(', ')}${unknownStages.size>6?'…':''}.`);
+      const thinStages = [];
+      for (const [pl, stages] of Object.entries(schema.pipelines)) {
+        for (const s of stages) {
+          const n = deals.filter(d=>d.stages[`${s} (${pl})`]).length;
+          if (n>0&&n<5) thinStages.push(`${s} (n=${n})`);
+        }
+      }
+      if (thinStages.length) issues.push(`Low sample stages (n<5) — metrics may be unreliable: ${thinStages.slice(0,4).join(', ')}${thinStages.length>4?'…':''}.`);
+
+      // Summary
+      const stats = summaryStats(deals, schema);
+      renderSummaryCards(stats);
+      renderQuality(issues);
+
+      // Store card (global, use first occurrence)
+      const { storeCard: sc0 } = computeSignals(deals, plNames[0], schema.pipelines[plNames[0]], schema.wonNames, schema.lostNames, schema);
+      renderStoreCard(sc0);
+
+      // Tabs
+      document.getElementById('tabs').innerHTML = plNames.map((pl,i)=>
+        `<button class="tab-btn${i===0?' active':''}" id="tab-${sid(pl)}" onclick="switchTab('${esc(pl).replace(/'/g,"\\'")}')">${esc(pl)}</button>`
+      ).join('');
+
+      // Pipeline sections
+      const sectionsEl = document.getElementById('pl-sections');
+      sectionsEl.innerHTML = '';
+
+      plNames.forEach((pl, idx) => {
+        const stages = schema.pipelines[pl];
+        const { wonNames, lostNames } = schema;
+        const funnelData = computeFunnel(deals, pl, stages, wonNames, lostNames);
+        const timeData   = computeTime(deals, pl, stages);
+        const { sigs }   = computeSignals(deals, pl, stages, wonNames, lostNames, schema);
+        const staleData  = computeStale(deals, pl, stages, wonNames, lostNames);
+        const hvCount    = timeData.filter(t=>t.highVar).length;
+        const totalAlert = staleData.reduce((s,t)=>s+t.over,0);
+
+        const fid  = 'f-'+sid(pl);
+        const cid  = 'c-'+sid(pl);
+        const sgid = 's-'+sid(pl);
+        const stid = 'st-'+sid(pl);
+
+        const div = document.createElement('div');
+        div.className = `pl-section${idx===0?' active':''}`;
+        div.id = 'pl-'+sid(pl);
+        div.innerHTML = `
+          <div class="card">
+            <div class="card-title">Funnel Conversion Rates</div>
+            <div class="card-sub">Bar width = deal volume. % shows advance rate toward closed won. Drop-off % shown between stages.</div>
+            <div id="${fid}"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Median Time Per Stage ${hvCount?`<span class="b-warn">⚠ ${hvCount} high-variance stage${hvCount>1?'s':''}</span>`:''}</div>
+            <div class="card-sub">Median days in each stage (exit date − entry date). Amber = IQR > 2× median. Hover bars for detail.</div>
+            <div class="chart-outer" style="height:${Math.max(180,timeData.length*38+40)}px"><canvas id="${cid}"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Key Conversion Signals</div>
+            <div class="card-sub">Win rate (% that eventually close won) by stage. "Key Inflection" marks stages where win rate jumps >15 points — strongest predictors of a closed deal.</div>
+            <div id="${sgid}"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Stale Deal Thresholds ${totalAlert?`<span class="b-danger">${totalAlert} active deal${totalAlert>1?'s':''} flagged</span>`:''}</div>
+            <div class="card-sub">Threshold = 75th percentile of days lost deals spent at each stage. Active deals past this point are flagged.</div>
+            <div id="${stid}"></div>
+          </div>`;
+        sectionsEl.appendChild(div);
+
+        renderFunnel(funnelData, fid);
+        renderSignals(sigs, sgid);
+        renderStale(staleData, stid);
+        setTimeout(() => renderTimeChart(timeData, cid), 10);
+      });
+
+      // File info bar
+      document.getElementById('file-info').innerHTML =
+        `<strong>${esc(fileName)}</strong> &nbsp;·&nbsp; ${deals.length.toLocaleString()} deals &nbsp;·&nbsp; ${stats.won} won &nbsp;·&nbsp; ${stats.lost} lost &nbsp;·&nbsp; ${plNames.length} pipeline${plNames.length!==1?'s':''} detected`;
+
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+
+    } catch(err) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('upload-zone').style.display = 'block';
+      alert('Error: ' + err.message);
+      console.error(err);
+    }
+  }, 60);
+}
+
+// ─────────────────────────────────────────────
+// FILE HANDLING
+// ─────────────────────────────────────────────
+function handleFile(file) {
+  if (!file?.name.toLowerCase().endsWith('.csv')) { alert('Please upload a .csv file.'); return; }
+  document.getElementById('upload-zone').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('loading').style.display = 'block';
+  Papa.parse(file, {
+    header:true, skipEmptyLines:true,
+    complete: r => analyzeData(r.data, r.meta.fields||[], file.name),
+    error:    e => { document.getElementById('loading').style.display='none'; document.getElementById('upload-zone').style.display='block'; alert('CSV parse error: '+e.message); }
+  });
+}
+
+function resetTool() {
+  Object.values(_charts).forEach(c=>c.destroy()); _charts={};
+  ['dashboard','loading'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('upload-zone').style.display='block';
+  document.getElementById('file-input').value='';
+  ['pl-sections','summary-cards','tabs','quality-wrap','store-wrap'].forEach(id=>document.getElementById(id).innerHTML='');
+}
+
+// ─────────────────────────────────────────────
+// EVENTS
+// ─────────────────────────────────────────────
+document.getElementById('file-input').addEventListener('change', e => { if(e.target.files[0]) handleFile(e.target.files[0]); });
+
+const zone = document.getElementById('upload-zone');
+zone.addEventListener('click', () => document.getElementById('file-input').click());
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('over'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+</script>
+</body>
+</html>
