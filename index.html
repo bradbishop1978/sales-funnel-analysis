@@ -320,15 +320,28 @@ function buildDeals(rows, schema) {
 // SUMMARY STATS
 // ─────────────────────────────────────────────
 function summaryStats(deals, schema) {
-  const { pipelines, wonNames, lostNames } = schema;
+  const { pipelines, wonNames, lostNames, stageMap } = schema;
   const won  = deals.filter(d=>d.outcome==='won');
   const lost = deals.filter(d=>d.outcome==='lost');
 
+  // All won-stage keys across every pipeline — used as close-date proxy
+  // when the CSV has no "Close Date" column (e.g. live-deals exports)
+  const allWonKeys = Object.values(stageMap)
+    .filter(i=>wonNames.has(i.stageName))
+    .map(i=>`${i.stageName} (${i.pipeline})`);
+
   const lengths = won.map(d => {
     const entries = Object.values(d.stages).map(s=>s.entered).filter(Boolean);
-    if (!entries.length || !d.closeDate) return null;
+    if (!entries.length) return null;
+    let closeDate = d.closeDate;
+    if (!closeDate) {
+      // Fall back to the latest date-entered among any won stage
+      const wonEntries = allWonKeys.map(k=>d.stages[k]?.entered).filter(Boolean);
+      if (wonEntries.length) closeDate = new Date(Math.max(...wonEntries.map(e=>e.getTime())));
+    }
+    if (!closeDate) return null;
     const first = new Date(Math.min(...entries.map(e=>e.getTime())));
-    const v = (d.closeDate - first)/86400000;
+    const v = (closeDate - first)/86400000;
     return v > 0 ? v : null;
   }).filter(v=>v!=null);
 
