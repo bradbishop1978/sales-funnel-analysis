@@ -53,26 +53,6 @@
     .quality-banner{background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:11px 16px;margin-bottom:18px;font-size:.82rem;color:#92400e;display:flex;gap:10px}
     .quality-banner ul{padding-left:18px;margin-top:3px}
 
-    /* ── Summary cards ── */
-    .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
-    @media(max-width:900px){.summary-grid{grid-template-columns:repeat(2,1fr)}}
-    .stat-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
-    .stat-card .lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:7px}
-    .stat-card .val{font-size:1.7rem;font-weight:700;line-height:1}
-    .stat-card .sub{font-size:.78rem;color:var(--muted);margin-top:5px}
-    .c-blue .val{color:var(--primary)}
-    .c-green .val{color:var(--success)}
-    .c-red .val{color:var(--danger)}
-
-    /* ── Store highlight ── */
-    .store-highlight{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;border-radius:10px;padding:18px 22px;margin-bottom:22px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:18px;align-items:center}
-    @media(max-width:900px){.store-highlight{grid-template-columns:1fr 1fr}}
-    .sh-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:#1d4ed8;font-weight:600;margin-bottom:3px}
-    .sh-val{font-size:1.4rem;font-weight:700;color:#1e3a5f}
-    .sh-note{font-size:.76rem;color:#3b82f6;margin-top:2px}
-    .sh-name{font-size:1rem;font-weight:600;color:#1e3a5f}
-    .sh-sub{font-size:.8rem;color:#3b82f6;margin-top:3px}
-
     /* ── Tabs ── */
     .tabs{display:flex;gap:2px;background:#e2e8f0;border-radius:10px;padding:4px;margin-bottom:22px;flex-wrap:wrap}
     .tab-btn{padding:7px 16px;border-radius:7px;border:none;background:transparent;cursor:pointer;font-size:.85rem;font-weight:500;color:var(--muted);transition:all .15s;white-space:nowrap}
@@ -83,10 +63,42 @@
     .pl-section{display:none}
     .pl-section.active{display:block}
 
-    /* ── Section cards ── */
+    /* ── Cards ── */
     .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
     .card-title{font-size:.975rem;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:8px}
     .card-sub{font-size:.78rem;color:var(--muted);margin-bottom:18px}
+
+    /* ── Layer tag ── */
+    .layer-tag{display:inline-block;font-size:.6rem;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2px 7px;margin-bottom:6px}
+
+    /* ── Layer 1: Pipeline Summary ── */
+    .card-header-row{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+    .card-header-left{}
+    .date-filter-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding-top:2px}
+    .filter-lbl{font-size:.71rem;color:var(--muted);font-weight:600;white-space:nowrap;margin-right:4px}
+    .filter-btn{padding:4px 11px;border-radius:6px;border:1px solid var(--border);background:#f8fafc;cursor:pointer;font-size:.73rem;font-weight:500;color:var(--muted);transition:all .15s}
+    .filter-btn:hover{background:var(--border);color:var(--text)}
+    .filter-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+
+    .l1-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:2px}
+    @media(max-width:1000px){.l1-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:520px){.l1-grid{grid-template-columns:1fr}}
+
+    .l1-card{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+    .l1-card.l1-green{background:#f0fdf4;border-color:#bbf7d0}
+    .l1-card.l1-red{background:#fff5f5;border-color:#fecaca}
+    .l1-card.l1-blue{background:#eff6ff;border-color:#bfdbfe}
+    .l1-card.l1-win{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#86efac}
+
+    .l1-lbl{font-size:.66rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700;margin-bottom:5px}
+    .l1-val{font-size:1.55rem;font-weight:700;line-height:1}
+    .l1-card.l1-win .l1-val{font-size:2.3rem;color:#15803d}
+    .l1-card.l1-green .l1-val{color:var(--success)}
+    .l1-card.l1-red .l1-val{color:var(--danger)}
+    .l1-card.l1-blue .l1-val{color:var(--primary)}
+    .l1-sub{font-size:.71rem;color:var(--muted);margin-top:5px}
+
+    .limited-warn{background:#fef3c7;border:1px solid #fde68a;border-radius:7px;padding:9px 14px;font-size:.8rem;color:#92400e;margin-bottom:14px}
 
     /* ── Funnel ── */
     .funnel-wrap{display:flex;flex-direction:column;align-items:center;gap:0;padding:4px 0}
@@ -97,6 +109,7 @@
     .f-bar .f-pct{font-weight:700;white-space:nowrap;font-size:.9rem}
     .f-drop{font-size:.72rem;color:var(--danger);text-align:center;padding:1px 0 2px;opacity:.85}
     .f-won{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:8px 16px;text-align:center;font-size:.82rem;color:#166534;font-weight:500;margin-top:4px;width:60%}
+    .f-active{font-size:.7rem;opacity:.8;margin-left:3px}
 
     /* ── Chart ── */
     .chart-outer{position:relative}
@@ -109,26 +122,27 @@
     tr:hover td{background:#f8fafc}
 
     /* ── Badges ── */
-    .b-inflect{background:#dcfce7;color:#166534;font-size:.67rem;padding:2px 6px;border-radius:100px;font-weight:600;margin-left:5px;vertical-align:middle}
     .b-warn{background:#fef3c7;color:#92400e;font-size:.7rem;padding:2px 7px;border-radius:100px;font-weight:600}
     .b-danger{background:#fee2e2;color:#991b1b;font-size:.7rem;padding:2px 7px;border-radius:100px;font-weight:600}
 
     /* ── Win bar ── */
     .wbar{display:flex;align-items:center;gap:8px}
     .wbar-track{flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden}
-    .wbar-fill{height:100%;background:var(--success);border-radius:3px}
-    .wbar-lbl{min-width:34px;text-align:right;font-size:.82rem}
+    .wbar-fill{height:100%;border-radius:3px}
+    .wbar-lbl{min-width:34px;text-align:right;font-size:.82rem;font-weight:600}
 
-    /* ── Alert count ── */
+    /* ── At-risk ── */
     .alert-dot{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:var(--danger);color:#fff;border-radius:50%;font-size:.7rem;font-weight:700}
     .at-risk-btn{background:none;border:none;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:5px}
     .at-risk-btn:hover .b-danger{text-decoration:underline}
 
-    /* ── Empty state ── */
+    /* ── Empty ── */
     .empty{text-align:center;padding:36px;color:var(--muted);font-size:.875rem}
 
-    /* ── Funnel active count ── */
-    .f-active{font-size:.7rem;opacity:.8;margin-left:3px}
+    /* ── Sub-section divider ── */
+    .sub-section{margin-top:24px;padding-top:20px;border-top:1px solid var(--border)}
+    .sub-title{font-size:.875rem;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:8px}
+    .sub-sub{font-size:.76rem;color:var(--muted);margin-bottom:14px}
 
     /* ── Deal Analyzer ── */
     .da-search-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;flex-wrap:wrap}
@@ -143,12 +157,10 @@
     .da-item-name{font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .da-item-stage{font-size:.75rem;color:var(--muted);white-space:nowrap}
     .da-count-lbl{font-size:.8rem;color:var(--muted);padding-top:11px}
-    /* deal header */
     .da-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:18px}
     .da-header h3{font-size:1.05rem;font-weight:600;margin-bottom:4px}
     .da-meta{font-size:.8rem;color:var(--muted);margin-bottom:5px}
     .da-cur-badge{display:inline-block;background:#eff6ff;color:var(--primary-dk);font-size:.78rem;font-weight:600;padding:3px 10px;border-radius:100px}
-    /* timeline */
     .tl-outer{overflow-x:auto;padding:4px 0 14px;margin-bottom:18px}
     .tl-row{display:flex;align-items:stretch;min-width:max-content}
     .tl-node{display:flex;flex-direction:column;align-items:center}
@@ -206,12 +218,11 @@
       <button class="btn-sm" onclick="resetTool()">↩ Load new file</button>
     </div>
     <div id="quality-wrap"></div>
-    <div class="summary-grid" id="summary-cards"></div>
-    <div id="store-wrap"></div>
     <div class="tabs" id="tabs"></div>
     <div id="pl-sections"></div>
 
     <div class="card" style="margin-top:8px">
+      <div class="layer-tag">Layer 4</div>
       <div class="card-title">Individual Deal Analyzer</div>
       <div class="card-sub">Search any deal to see its stage-by-stage history vs. pipeline benchmarks. Stages in red have exceeded the stale threshold.</div>
       <div class="da-search-row">
@@ -239,12 +250,13 @@
 let _charts = {};
 let _allDeals = [];
 let _searchDeals = [];
-let _stageMedians = {};     // "stage (pipeline)" → median days
-let _stageThresholds = {};  // "stage (pipeline)" → 75th-pct threshold days
-let _wonNames  = new Set(); // stage names that are closed-won terminals
-let _lostNames = new Set(); // stage names that are closed-lost terminals
-let _pipelineStats     = {}; // pipelineName|'all' → summaryStats result
-let _pipelineSpotlight = {}; // pipelineName|'all' → spotlight card data
+let _stageMedians    = {};
+let _stageThresholds = {};
+let _wonNames  = new Set();
+let _lostNames = new Set();
+let _schema    = null;
+let _plDateFilter = {};  // pl → 'all'|'year'|'q1'|'q2'|'q3'|'q4'
+
 const STATUS_LABEL = { ahead:'Ahead', 'on-pace':'On Pace', behind:'Behind', stale:'Stale!', 'no-bench':'Active', won:'✓ Closed Won', lost:'✗ Closed Lost' };
 const STATUS_COLOR = { ahead:'#f0fdf4;color:#166534', 'on-pace':'#dbeafe;color:#1e40af', behind:'#fef3c7;color:#92400e', stale:'#fee2e2;color:#991b1b', 'no-bench':'#f1f5f9;color:#475569', won:'#f0fdf4;color:#166534', lost:'#fee2e2;color:#991b1b' };
 
@@ -275,13 +287,13 @@ function pct(arr, p) {
   return a[lo] + (a[hi]-a[lo])*(i-lo);
 }
 
-function fd(d) { // format days
+function fd(d) {
   if (d == null) return '—';
   if (d < 1) return '<1d';
   return Math.round(d)+'d';
 }
 
-function fp(v) { // format percent
+function fp(v) {
   if (v == null) return '—';
   return Math.round(v*100)+'%';
 }
@@ -290,7 +302,7 @@ function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-function sid(s) { // safe element id
+function sid(s) {
   return s.replace(/[^a-zA-Z0-9]/g,'_');
 }
 
@@ -304,8 +316,8 @@ function detectSchema(headers) {
 
   const re = /^Date entered "(.+) \((.+)\)"$/;
   const headerSet = new Set(headers);
-  const pipelines = {}; // name → [stageName,...]
-  const stageMap = {};  // "stage (pipeline)" → {pipeline,stageName,enteredCol,exitedCol}
+  const pipelines = {};
+  const stageMap  = {};
 
   for (const h of headers) {
     const m = h.trim().match(re);
@@ -319,7 +331,6 @@ function detectSchema(headers) {
       exitedCol: headerSet.has(exitCol) ? exitCol : null };
   }
 
-  // Sort stages by numeric prefix
   for (const pl of Object.keys(pipelines)) {
     pipelines[pl].sort((a,b) => {
       const na = parseFloat(a.match(/^(\d+(?:\.\d+)?)/)?.[1] ?? 999);
@@ -331,7 +342,6 @@ function detectSchema(headers) {
   const wonNames  = new Set(Object.values(stageMap).filter(i => /closed[\s-]*won/i.test(i.stageName)).map(i=>i.stageName));
   const lostNames = new Set(Object.values(stageMap).filter(i => /closed[\s-]*lost/i.test(i.stageName)).map(i=>i.stageName));
 
-  // Store-equivalent stage
   let storeStage = null;
   for (const info of Object.values(stageMap)) {
     if (/store/i.test(info.stageName) && !/closed/i.test(info.stageName)) { storeStage = info; break; }
@@ -374,7 +384,6 @@ function buildDeals(rows, schema) {
     }
     if (!hasHist) noHistory++;
 
-    // primary pipeline
     let primaryPipeline = null;
     const matches = stageToInfos[cur];
     if (matches?.length===1) primaryPipeline = matches[0].pipeline;
@@ -396,131 +405,140 @@ function buildDeals(rows, schema) {
 }
 
 // ─────────────────────────────────────────────
-// SUMMARY STATS
+// DATE RANGE HELPERS
 // ─────────────────────────────────────────────
-function summaryStats(deals, schema) {
-  const { pipelines, wonNames, lostNames, stageMap } = schema;
-  const won  = deals.filter(d=>d.outcome==='won');
-  const lost = deals.filter(d=>d.outcome==='lost');
+function getDateRangeBounds(range) {
+  const yr = new Date().getFullYear();
+  switch(range) {
+    case 'year': return [new Date(yr,0,1), new Date(yr+1,0,1)];
+    case 'q1':   return [new Date(yr,0,1), new Date(yr,3,1)];
+    case 'q2':   return [new Date(yr,3,1), new Date(yr,6,1)];
+    case 'q3':   return [new Date(yr,6,1), new Date(yr,9,1)];
+    case 'q4':   return [new Date(yr,9,1), new Date(yr+1,0,1)];
+    default:     return [null, null];
+  }
+}
 
-  // All won-stage keys across every pipeline — used as close-date proxy
-  // when the CSV has no "Close Date" column (e.g. live-deals exports)
-  const allWonKeys = Object.values(stageMap)
-    .filter(i=>wonNames.has(i.stageName))
-    .map(i=>`${i.stageName} (${i.pipeline})`);
+function filterDealsForPipeline(allDeals, pl, schema, range) {
+  const stages = schema.pipelines[pl] || [];
+  let plDeals = allDeals.filter(d => stages.some(s => d.stages[`${s} (${pl})`]));
+  if (range && range !== 'all') {
+    const [from, to] = getDateRangeBounds(range);
+    plDeals = plDeals.filter(d => {
+      const entries = stages.map(s => d.stages[`${s} (${pl})`]?.entered).filter(Boolean);
+      if (!entries.length) return false;
+      const first = new Date(Math.min(...entries.map(e => e.getTime())));
+      return (!from || first >= from) && (!to || first < to);
+    });
+  }
+  return plDeals;
+}
+
+// ─────────────────────────────────────────────
+// LAYER 1 — PIPELINE SUMMARY
+// ─────────────────────────────────────────────
+function computePipelineSummary(plDeals, pl, schema) {
+  const stages = schema.pipelines[pl] || [];
+  const { wonNames, lostNames } = schema;
+  const wonKeys  = stages.filter(s => wonNames.has(s)).map(s => `${s} (${pl})`);
+  const lostKeys = stages.filter(s => lostNames.has(s)).map(s => `${s} (${pl})`);
+
+  const won  = plDeals.filter(d => wonKeys.some(k => d.stages[k]));
+  const lost = plDeals.filter(d => lostKeys.some(k => d.stages[k]));
+  const closed = won.length + lost.length;
+  const active = plDeals.filter(d =>
+    !wonKeys.some(k => d.stages[k]) && !lostKeys.some(k => d.stages[k])
+  );
 
   const lengths = won.map(d => {
-    const entries = Object.values(d.stages).map(s=>s.entered).filter(Boolean);
+    const entries = stages.map(s => d.stages[`${s} (${pl})`]?.entered).filter(Boolean);
     if (!entries.length) return null;
-    let closeDate = d.closeDate;
-    if (!closeDate) {
-      // Fall back to the latest date-entered among any won stage
-      const wonEntries = allWonKeys.map(k=>d.stages[k]?.entered).filter(Boolean);
-      if (wonEntries.length) closeDate = new Date(Math.max(...wonEntries.map(e=>e.getTime())));
+    const first = new Date(Math.min(...entries.map(e => e.getTime())));
+    let cd = d.closeDate;
+    if (!cd) {
+      const we = wonKeys.map(k => d.stages[k]?.entered).filter(Boolean);
+      if (we.length) cd = new Date(Math.max(...we.map(e => e.getTime())));
     }
-    if (!closeDate) return null;
-    const first = new Date(Math.min(...entries.map(e=>e.getTime())));
-    const v = (closeDate - first)/86400000;
+    if (!cd) return null;
+    const v = (cd - first) / 86400000;
     return v > 0 ? v : null;
-  }).filter(v=>v!=null);
+  }).filter(v => v != null);
 
-  let bestStage=null, bestRate=-1, worstStage=null, worstRate=-1;
-  for (const [pl, stages] of Object.entries(pipelines)) {
-    const body = stages.filter(s=>!wonNames.has(s)&&!lostNames.has(s));
-    const wonKeys = stages.filter(s=>wonNames.has(s)).map(s=>`${s} (${pl})`);
-    for (let i=0; i<body.length-1; i++) {
-      const key = `${body[i]} (${pl})`;
-      const later = [...body.slice(i+1).map(s=>`${s} (${pl})`), ...wonKeys];
-      const ent = deals.filter(d=>d.stages[key]);
-      if (ent.length < 5) continue;
-      const adv = ent.filter(d=>later.some(k=>d.stages[k]));
-      const rate = adv.length/ent.length;
-      if (rate > bestRate)  { bestRate=rate;  bestStage=body[i]; }
-      if ((1-rate) > worstRate) { worstRate=1-rate; worstStage=body[i]; }
+  let velocity = null;
+  if (won.length >= 2) {
+    const closeDates = won.map(d => {
+      let cd = d.closeDate;
+      if (!cd) {
+        const we = wonKeys.map(k => d.stages[k]?.entered).filter(Boolean);
+        if (we.length) cd = new Date(Math.max(...we.map(e => e.getTime())));
+      }
+      return cd;
+    }).filter(Boolean).sort((a,b) => a-b);
+    if (closeDates.length >= 2) {
+      const spanMonths = (closeDates[closeDates.length-1] - closeDates[0]) / (30.44*86400000);
+      if (spanMonths >= 0.5) velocity = won.length / spanMonths;
     }
   }
 
   return {
-    typicalLength: median(lengths),
-    winRate: (won.length+lost.length) > 0 ? won.length/(won.length+lost.length) : null,
-    total: deals.length, won: won.length, lost: lost.length,
-    active: deals.length-won.length-lost.length,
-    bestStage, bestRate, worstStage, worstRate
+    total: plDeals.length,
+    won: won.length, lost: lost.length, closed,
+    active: active.length,
+    winRate:  closed > 0 ? won.length / closed : null,
+    lossRate: closed > 0 ? lost.length / closed : null,
+    medianCycle: median(lengths),
+    velocity,
+    limitedData: closed < 10
   };
 }
 
 // ─────────────────────────────────────────────
-// SUMMARY STATS — PER PIPELINE
-// ─────────────────────────────────────────────
-function summaryStatsForPipeline(deals, pl, schema) {
-  const { pipelines, wonNames, lostNames } = schema;
-  const stages   = pipelines[pl] || [];
-  const wonKeys  = stages.filter(s=>wonNames.has(s)).map(s=>`${s} (${pl})`);
-  const lostKeys = stages.filter(s=>lostNames.has(s)).map(s=>`${s} (${pl})`);
-
-  // Deals with at least one stage entry in this pipeline
-  const plDeals = deals.filter(d => stages.some(s => d.stages[`${s} (${pl})`]));
-  const won  = plDeals.filter(d => wonKeys.some(k=>d.stages[k]));
-  const lost = plDeals.filter(d => lostKeys.some(k=>d.stages[k]));
-
-  const lengths = won.map(d => {
-    const plEntries = stages.map(s=>d.stages[`${s} (${pl})`]?.entered).filter(Boolean);
-    if (!plEntries.length) return null;
-    const first = new Date(Math.min(...plEntries.map(e=>e.getTime())));
-    let closeDate = d.closeDate;
-    if (!closeDate) {
-      const wonEntries = wonKeys.map(k=>d.stages[k]?.entered).filter(Boolean);
-      if (wonEntries.length) closeDate = new Date(Math.max(...wonEntries.map(e=>e.getTime())));
-    }
-    if (!closeDate) return null;
-    const v = (closeDate - first)/86400000;
-    return v > 0 ? v : null;
-  }).filter(v=>v!=null);
-
-  let bestStage=null, bestRate=-1, worstStage=null, worstRate=-1;
-  const body = stages.filter(s=>!wonNames.has(s)&&!lostNames.has(s));
-  for (let i=0; i<body.length-1; i++) {
-    const key = `${body[i]} (${pl})`;
-    const later = [...body.slice(i+1).map(s=>`${s} (${pl})`), ...wonKeys];
-    const ent = plDeals.filter(d=>d.stages[key]);
-    if (ent.length < 5) continue;
-    const adv = ent.filter(d=>later.some(k=>d.stages[k]));
-    const rate = adv.length/ent.length;
-    if (rate > bestRate)  { bestRate=rate;  bestStage=body[i]; }
-    if ((1-rate) > worstRate) { worstRate=1-rate; worstStage=body[i]; }
-  }
-
-  return {
-    typicalLength: median(lengths),
-    winRate: (won.length+lost.length) > 0 ? won.length/(won.length+lost.length) : null,
-    total: plDeals.length, won: won.length, lost: lost.length,
-    active: plDeals.length-won.length-lost.length,
-    bestStage, bestRate, worstStage, worstRate
-  };
-}
-
-// ─────────────────────────────────────────────
-// FUNNEL
+// LAYER 2 — STAGE BREAKDOWN
 // ─────────────────────────────────────────────
 function computeFunnel(deals, pl, stages, wonNames, lostNames) {
-  const body    = stages.filter(s=>!wonNames.has(s)&&!lostNames.has(s));
-  const wonKeys = stages.filter(s=>wonNames.has(s)).map(s=>`${s} (${pl})`);
-  const wonCount= deals.filter(d=>wonKeys.some(k=>d.stages[k])).length;
+  const body    = stages.filter(s => !wonNames.has(s) && !lostNames.has(s));
+  const wonKeys = stages.filter(s => wonNames.has(s)).map(s => `${s} (${pl})`);
+  const wonCount= deals.filter(d => wonKeys.some(k => d.stages[k])).length;
   const res = [];
-  for (let i=0; i<body.length; i++) {
+  for (let i = 0; i < body.length; i++) {
     const key  = `${body[i]} (${pl})`;
-    const ent  = deals.filter(d=>d.stages[key]);
+    const ent  = deals.filter(d => d.stages[key]);
     if (!ent.length) continue;
-    const later = [...body.slice(i+1).map(s=>`${s} (${pl})`), ...wonKeys];
-    const adv        = ent.filter(d=>later.some(k=>d.stages[k]));
-    const w          = ent.filter(d=>wonKeys.some(k=>d.stages[k]));
-    const currentlyIn= ent.filter(d=>d.outcome==='active' && !d.stages[key]?.exited).length;
-    res.push({ stage:body[i], entered:ent.length, advanced:adv.length, won:w.length,
-               currentlyIn,
-               conversionRate: adv.length/ent.length, winRate: w.length/ent.length,
-               dropRate: 1-adv.length/ent.length });
+    const later = [...body.slice(i+1).map(s => `${s} (${pl})`), ...wonKeys];
+    const adv         = ent.filter(d => later.some(k => d.stages[k]));
+    const currentlyIn = ent.filter(d => d.outcome==='active' && !d.stages[key]?.exited).length;
+    res.push({ stage:body[i], entered:ent.length, advanced:adv.length, currentlyIn,
+               conversionRate: adv.length/ent.length, dropRate: 1-adv.length/ent.length });
   }
   return { stages: res, totalWon: wonCount };
+}
+
+function computeStageBreakdown(plDeals, pl, stages, wonNames, lostNames) {
+  const body     = stages.filter(s => !wonNames.has(s) && !lostNames.has(s));
+  const wonKeys  = stages.filter(s =>  wonNames.has(s)).map(s => `${s} (${pl})`);
+  const lostKeys = stages.filter(s => lostNames.has(s)).map(s => `${s} (${pl})`);
+  const res = [];
+  for (let i = 0; i < body.length; i++) {
+    const key      = `${body[i]} (${pl})`;
+    const ent      = plDeals.filter(d => d.stages[key]);
+    if (!ent.length) continue;
+    const nextKeys = [...body.slice(i+1).map(s => `${s} (${pl})`), ...wonKeys];
+    const adv      = ent.filter(d => nextKeys.some(k => d.stages[k]));
+    const wentLost = ent.filter(d => lostKeys.some(k => d.stages[k]));
+    const here     = ent.filter(d => d.outcome === 'active' && !d.stages[key]?.exited).length;
+    const daysArr  = ent.filter(d => d.stages[key]?.days != null).map(d => d.stages[key].days);
+    res.push({
+      stage: body[i],
+      entered: ent.length,
+      advanced: adv.length,
+      advanceRate: adv.length / ent.length,
+      lostCount: wentLost.length,
+      lostRate: wentLost.length / ent.length,
+      currentlyIn: here,
+      medianDays: median(daysArr)
+    });
+  }
+  return res;
 }
 
 // ─────────────────────────────────────────────
@@ -528,8 +546,8 @@ function computeFunnel(deals, pl, stages, wonNames, lostNames) {
 // ─────────────────────────────────────────────
 function computeTime(deals, pl, stages) {
   return stages.map(stage => {
-    const key = `${stage} (${pl})`;
-    const vals = deals.filter(d=>d.stages[key]?.days!=null).map(d=>d.stages[key].days);
+    const key  = `${stage} (${pl})`;
+    const vals = deals.filter(d => d.stages[key]?.days != null).map(d => d.stages[key].days);
     if (!vals.length) return null;
     const med = median(vals), q25=pct(vals,25), q75=pct(vals,75);
     const iqr = q75!=null&&q25!=null ? q75-q25 : null;
@@ -539,149 +557,104 @@ function computeTime(deals, pl, stages) {
 }
 
 // ─────────────────────────────────────────────
-// CONVERSION SIGNALS
-// ─────────────────────────────────────────────
-function computeSignals(deals, pl, stages, wonNames, lostNames, schema) {
-  const body    = stages.filter(s=>!wonNames.has(s)&&!lostNames.has(s));
-  const wonKeys = stages.filter(s=>wonNames.has(s)).map(s=>`${s} (${pl})`);
-  const allWonKeys = Object.values(schema.stageMap)
-    .filter(i=>wonNames.has(i.stageName)).map(i=>`${i.stageName} (${i.pipeline})`);
-
-  let prev = 0;
-  const sigs = body.map(stage => {
-    const key = `${stage} (${pl})`;
-    const ent = deals.filter(d=>d.stages[key]);
-    if (ent.length < 3) return null;
-    const w = ent.filter(d=>wonKeys.some(k=>d.stages[k]));
-    const wr = w.length/ent.length;
-    const delta = wr-prev; prev = wr;
-    const daysArr = w.map(d => {
-      const se = d.stages[key]?.entered;
-      const we = wonKeys.map(k=>d.stages[k]?.entered).filter(Boolean);
-      if (!se||!we.length) return null;
-      const wd = new Date(Math.min(...we.map(x=>x.getTime())));
-      const v = (wd-se)/86400000;
-      return v>=0 ? v : null;
-    }).filter(v=>v!=null);
-    return { stage, entered:ent.length, won:w.length, winRate:wr, delta,
-             isInflect: delta>0.15, medDaysClose: median(daysArr) };
-  }).filter(Boolean);
-
-  // Store stage (global)
-  let storeCard = null;
-  if (schema.storeStage) {
-    const { stageName, pipeline } = schema.storeStage;
-    const sk = `${stageName} (${pipeline})`;
-    const sd = deals.filter(d=>d.stages[sk]);
-    if (sd.length) {
-      const sw = sd.filter(d=>allWonKeys.some(k=>d.stages[k]));
-      const da = sw.map(d => {
-        const se=d.stages[sk]?.entered;
-        const we=allWonKeys.map(k=>d.stages[k]?.entered).filter(Boolean);
-        if (!se||!we.length) return null;
-        const wd=new Date(Math.min(...we.map(x=>x.getTime())));
-        const v=(wd-se)/86400000; return v>=0?v:null;
-      }).filter(v=>v!=null);
-      storeCard = { stageName, pipeline, entered:sd.length, won:sw.length,
-        winRate:sw.length/sd.length, medDays:median(da) };
-    }
-  }
-
-  return { sigs, storeCard };
-}
-
-// ─────────────────────────────────────────────
-// STALE THRESHOLDS
+// LAYER 3 — STALE THRESHOLDS
 // ─────────────────────────────────────────────
 function computeStale(deals, pl, stages, wonNames, lostNames) {
-  const body     = stages.filter(s=>!wonNames.has(s)&&!lostNames.has(s));
-  const lostKeys = stages.filter(s=>lostNames.has(s)).map(s=>`${s} (${pl})`);
-  const lostD    = deals.filter(d=>lostKeys.some(k=>d.stages[k]));
+  const body     = stages.filter(s => !wonNames.has(s) && !lostNames.has(s));
+  const lostKeys = stages.filter(s =>  lostNames.has(s)).map(s => `${s} (${pl})`);
+  const lostD    = deals.filter(d => lostKeys.some(k => d.stages[k]));
   const now      = Date.now();
   return body.map(stage => {
-    const key = `${stage} (${pl})`;
-    const vals = lostD.filter(d=>d.stages[key]?.days!=null).map(d=>d.stages[key].days);
+    const key  = `${stage} (${pl})`;
+    const vals = lostD.filter(d => d.stages[key]?.days != null).map(d => d.stages[key].days);
     if (vals.length < 3) return null;
     const thresh = pct(vals, 75);
     const overDeals = deals.filter(d => {
-      if (d.outcome!=='active') return false;
+      if (d.outcome !== 'active') return false;
       const sd = d.stages[key];
-      if (!sd?.entered||sd.exited) return false;
-      return thresh!=null && (now-sd.entered.getTime())/86400000 > thresh;
+      if (!sd?.entered || sd.exited) return false;
+      return thresh != null && (now - sd.entered.getTime())/86400000 > thresh;
     });
-    return { stage, n:vals.length, med:median(vals), thresh, over: overDeals.length, overDeals };
+    return { stage, n:vals.length, med:median(vals), thresh, over:overDeals.length, overDeals };
   }).filter(Boolean);
 }
 
 // ─────────────────────────────────────────────
-// RENDER HELPERS
+// RENDER — QUALITY BANNER
 // ─────────────────────────────────────────────
-function renderSummaryCards(stats, label) {
-  const noData = '<span style="font-size:.82rem;color:var(--muted)">Not enough data</span>';
-  const labelHtml = label
-    ? `<div style="grid-column:1/-1;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:2px">${esc(label)}</div>`
-    : '';
-  document.getElementById('summary-cards').innerHTML = labelHtml + `
-    <div class="stat-card c-blue">
-      <div class="lbl">Typical Deal Length</div>
-      <div class="val">${stats.typicalLength!=null?Math.round(stats.typicalLength)+'<span style="font-size:.9rem;font-weight:400"> days</span>':noData}</div>
-      <div class="sub">Median start-to-close (won deals)</div>
-    </div>
-    <div class="stat-card c-green">
-      <div class="lbl">Win Rate</div>
-      <div class="val">${stats.winRate!=null?fp(stats.winRate):noData}</div>
-      <div class="sub">${stats.won} won of ${stats.won+stats.lost} closed · ${stats.active} active</div>
-    </div>
-    <div class="stat-card c-green">
-      <div class="lbl">Best Conversion Stage</div>
-      <div class="val" style="font-size:.95rem;line-height:1.35">${stats.bestStage?esc(stats.bestStage):noData}</div>
-      <div class="sub">${stats.bestStage&&stats.bestRate>-1?fp(stats.bestRate)+' advance rate':''}</div>
-    </div>
-    <div class="stat-card c-red">
-      <div class="lbl">Biggest Drop-Off Stage</div>
-      <div class="val" style="font-size:.95rem;line-height:1.35">${stats.worstStage?esc(stats.worstStage):noData}</div>
-      <div class="sub">${stats.worstStage&&stats.worstRate>-1?fp(stats.worstRate)+' drop rate':''}</div>
-    </div>`;
-}
-
-function renderStoreCard(sc) {
-  const el = document.getElementById('store-wrap');
-  if (!sc) { el.innerHTML=''; return; }
-  el.innerHTML = `
-    <div class="store-highlight">
-      <div>
-        <div class="sh-title">Key Stage Spotlight</div>
-        <div class="sh-name">${esc(sc.stageName)}</div>
-        <div class="sh-sub">${esc(sc.pipeline)}</div>
-      </div>
-      <div>
-        <div class="sh-title">Deals Reaching It</div>
-        <div class="sh-val">${sc.entered.toLocaleString()}</div>
-        <div class="sh-note">total</div>
-      </div>
-      <div>
-        <div class="sh-title">Close Rate After</div>
-        <div class="sh-val">${fp(sc.winRate)}</div>
-        <div class="sh-note">${sc.won} closed won</div>
-      </div>
-      <div>
-        <div class="sh-title">Median Days to Close</div>
-        <div class="sh-val">${fd(sc.medDays)}</div>
-        <div class="sh-note">from stage entry</div>
-      </div>
-    </div>`;
-}
-
 function renderQuality(issues) {
   const el = document.getElementById('quality-wrap');
   if (!issues.length) { el.innerHTML=''; return; }
   el.innerHTML = `<div class="quality-banner"><div>⚠️</div><div><strong>Data quality notes</strong><ul>${issues.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></div>`;
 }
 
+// ─────────────────────────────────────────────
+// RENDER — LAYER 1
+// ─────────────────────────────────────────────
+function renderPipelineSummary(stats, pl) {
+  const el = document.getElementById('ps-' + sid(pl));
+  if (!el) return;
+  const nd = '<span style="color:var(--muted);font-size:.9rem">—</span>';
+  const wonPct  = stats.closed > 0 ? Math.round(stats.won  / stats.closed * 100) + '% of closed' : '—';
+  const lostPct = stats.closed > 0 ? Math.round(stats.lost / stats.closed * 100) + '% of closed' : '—';
+
+  let html = '';
+  if (stats.limitedData) {
+    html += `<div class="limited-warn">⚠ Fewer than 10 closed deals — rates shown may not be statistically reliable.</div>`;
+  }
+  html += `<div class="l1-grid">
+    <div class="l1-card">
+      <div class="l1-lbl">Total Deals</div>
+      <div class="l1-val">${stats.total.toLocaleString()}</div>
+      <div class="l1-sub">active + closed</div>
+    </div>
+    <div class="l1-card l1-blue">
+      <div class="l1-lbl">Active / In Progress</div>
+      <div class="l1-val">${stats.active.toLocaleString()}</div>
+      <div class="l1-sub">not yet closed either way</div>
+    </div>
+    <div class="l1-card l1-green">
+      <div class="l1-lbl">Closed Won</div>
+      <div class="l1-val">${stats.won.toLocaleString()}</div>
+      <div class="l1-sub">${wonPct}</div>
+    </div>
+    <div class="l1-card l1-red">
+      <div class="l1-lbl">Closed Lost</div>
+      <div class="l1-val">${stats.lost.toLocaleString()}</div>
+      <div class="l1-sub">${lostPct}</div>
+    </div>
+    <div class="l1-card l1-win">
+      <div class="l1-lbl">Overall Win Rate ★</div>
+      <div class="l1-val">${stats.winRate != null ? Math.round(stats.winRate*100)+'%' : nd}</div>
+      <div class="l1-sub">Won ÷ (Won + Lost) — ${stats.won} won of ${stats.closed} closed</div>
+    </div>
+    <div class="l1-card l1-red">
+      <div class="l1-lbl">Overall Loss Rate</div>
+      <div class="l1-val">${stats.lossRate != null ? Math.round(stats.lossRate*100)+'%' : nd}</div>
+      <div class="l1-sub">Lost ÷ (Won + Lost)</div>
+    </div>
+    <div class="l1-card l1-blue">
+      <div class="l1-lbl">Median Deal Cycle</div>
+      <div class="l1-val">${stats.medianCycle != null ? Math.round(stats.medianCycle)+'<span style="font-size:.85rem;font-weight:400">d</span>' : nd}</div>
+      <div class="l1-sub">first stage → Closed Won</div>
+    </div>
+    <div class="l1-card">
+      <div class="l1-lbl">Pipeline Velocity</div>
+      <div class="l1-val">${stats.velocity != null ? stats.velocity.toFixed(1) : nd}</div>
+      <div class="l1-sub">avg deals closed / month</div>
+    </div>
+  </div>`;
+  el.innerHTML = html;
+}
+
+// ─────────────────────────────────────────────
+// RENDER — LAYER 2: FUNNEL VISUAL
+// ─────────────────────────────────────────────
 function renderFunnel(data, id) {
   const el = document.getElementById(id);
+  if (!el) return;
   if (!data.stages.length) { el.innerHTML='<div class="empty">Not enough data for this pipeline.</div>'; return; }
-  const maxEnt = Math.max(...data.stages.map(s=>s.entered));
+  const maxEnt = Math.max(...data.stages.map(s => s.entered));
   const colors = ['#3b82f6','#6366f1','#8b5cf6','#a855f7','#ec4899','#f97316','#ef4444'];
   let html = '<div class="funnel-wrap">';
   data.stages.forEach((f,i) => {
@@ -691,7 +664,7 @@ function renderFunnel(data, id) {
     const dropPct = Math.round(f.dropRate*100);
     const activeStr = f.currentlyIn > 0 ? `<span class="f-active">(${f.currentlyIn} here)</span>` : '';
     html += `<div class="f-row">
-      <div class="f-bar" style="width:${w}%;background:${col}" title="${esc(f.stage)}: ${f.entered} total deals, ${f.currentlyIn} currently active here, ${convPct}% advance rate">
+      <div class="f-bar" style="width:${w}%;background:${col}" title="${esc(f.stage)}: ${f.entered} total, ${f.currentlyIn} currently here, ${convPct}% advance">
         <span class="f-name">${esc(f.stage)}${activeStr}</span>
         <span class="f-count">${f.entered.toLocaleString()}</span>
         <span class="f-pct">${convPct}% →</span>
@@ -706,14 +679,61 @@ function renderFunnel(data, id) {
   el.innerHTML = html;
 }
 
+// ─────────────────────────────────────────────
+// RENDER — LAYER 2: STAGE BREAKDOWN TABLE
+// ─────────────────────────────────────────────
+function renderStageBreakdown(breakdown, id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (!breakdown.length) { el.innerHTML='<div class="empty">No stage data available.</div>'; return; }
+  let html = `<table><thead><tr>
+    <th>Stage</th>
+    <th>Deals Entered</th>
+    <th>Advanced to Next Stage</th>
+    <th>Went Closed Lost</th>
+    <th>Median Days at Stage</th>
+    <th>Currently Here</th>
+  </tr></thead><tbody>`;
+  for (const s of breakdown) {
+    const advPct  = Math.round(s.advanceRate * 100);
+    const lostPct = Math.round(s.lostRate * 100);
+    const advCol  = advPct >= 60 ? '#10b981' : advPct >= 35 ? '#f59e0b' : '#ef4444';
+    const lostCol = lostPct > 40 ? '#dc2626' : lostPct > 20 ? '#d97706' : 'var(--muted)';
+    html += `<tr>
+      <td><strong>${esc(s.stage)}</strong></td>
+      <td>${s.entered.toLocaleString()}</td>
+      <td>
+        <div class="wbar" style="margin-bottom:3px">
+          <div class="wbar-track"><div class="wbar-fill" style="width:${advPct}%;background:${advCol}"></div></div>
+          <span class="wbar-lbl" style="color:${advCol}">${advPct}%</span>
+        </div>
+        <div style="font-size:.71rem;color:var(--muted)">${s.advanced} of ${s.entered}</div>
+      </td>
+      <td>
+        <span style="font-weight:600;color:${lostCol}">${lostPct}%</span>
+        <span style="font-size:.72rem;color:var(--muted);margin-left:4px">(${s.lostCount})</span>
+      </td>
+      <td>${fd(s.medianDays)}</td>
+      <td>${s.currentlyIn > 0
+        ? `<strong style="color:var(--primary)">${s.currentlyIn}</strong>`
+        : '<span style="color:var(--muted)">0</span>'}</td>
+    </tr>`;
+  }
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+// ─────────────────────────────────────────────
+// RENDER — LAYER 2: TIME CHART
+// ─────────────────────────────────────────────
 function renderTimeChart(timeData, chartId) {
   const canvas = document.getElementById(chartId);
   if (!canvas) return;
   if (_charts[chartId]) { _charts[chartId].destroy(); delete _charts[chartId]; }
   if (!timeData.length) { canvas.parentElement.innerHTML='<div class="empty">No time data available.</div>'; return; }
-  const labels  = timeData.map(d=>d.stage);
-  const medians = timeData.map(d=>d.median!=null?+d.median.toFixed(1):null);
-  const colors  = timeData.map(d=>d.highVar?'#f59e0b':'#3b82f6');
+  const labels  = timeData.map(d => d.stage);
+  const medians = timeData.map(d => d.median!=null ? +d.median.toFixed(1) : null);
+  const colors  = timeData.map(d => d.highVar ? '#f59e0b' : '#3b82f6');
   _charts[chartId] = new Chart(canvas, {
     type:'bar',
     data:{
@@ -740,28 +760,9 @@ function renderTimeChart(timeData, chartId) {
   });
 }
 
-function renderSignals(sigs, containerId) {
-  const el = document.getElementById(containerId);
-  if (!sigs.length) { el.innerHTML='<div class="empty">Not enough data for conversion signals.</div>'; return; }
-  let html = `<table><thead><tr>
-    <th>Stage (funnel order)</th><th>Deals Entered</th><th>Close Rate</th><th>Rate Change</th><th>Median Days to Close</th>
-  </tr></thead><tbody>`;
-  for (const s of sigs) {
-    const inf = s.isInflect ? `<span class="b-inflect">↑ Key Inflection</span>` : '';
-    const chg = s.delta>0 ? `<span style="color:var(--success)">▲ ${fp(s.delta)}</span>`
-               : s.delta<0 ? `<span style="color:var(--danger)">▼ ${fp(Math.abs(s.delta))}</span>` : '—';
-    html += `<tr>
-      <td><strong>${esc(s.stage)}</strong>${inf}</td>
-      <td>${s.entered.toLocaleString()}</td>
-      <td><div class="wbar"><div class="wbar-track"><div class="wbar-fill" style="width:${Math.round(s.winRate*100)}%"></div></div><span class="wbar-lbl">${fp(s.winRate)}</span></div></td>
-      <td>${chg}</td>
-      <td>${fd(s.medDaysClose)}</td>
-    </tr>`;
-  }
-  html += '</tbody></table>';
-  el.innerHTML = html;
-}
-
+// ─────────────────────────────────────────────
+// RENDER — LAYER 3: STALE TABLE
+// ─────────────────────────────────────────────
 function renderStale(thresholds, containerId, pl) {
   const el = document.getElementById(containerId);
   if (!thresholds.length) { el.innerHTML='<div class="empty">Not enough closed-lost data to compute thresholds.</div>'; return; }
@@ -785,17 +786,48 @@ function renderStale(thresholds, containerId, pl) {
 }
 
 // ─────────────────────────────────────────────
+// DATE FILTER INTERACTION
+// ─────────────────────────────────────────────
+function applyDateFilter(pl, range) {
+  _plDateFilter[pl] = range;
+  const secEl = document.getElementById('pl-' + sid(pl));
+  if (secEl) {
+    secEl.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.range === range);
+    });
+  }
+  rerenderL1L2(pl);
+}
+
+function rerenderL1L2(pl) {
+  if (!_schema) return;
+  const range    = _plDateFilter[pl] || 'all';
+  const filtered = filterDealsForPipeline(_allDeals, pl, _schema, range);
+  const stages   = _schema.pipelines[pl];
+  const { wonNames, lostNames } = _schema;
+
+  renderPipelineSummary(computePipelineSummary(filtered, pl, _schema), pl);
+  renderFunnel(computeFunnel(filtered, pl, stages, wonNames, lostNames), 'f-' + sid(pl));
+  renderStageBreakdown(computeStageBreakdown(filtered, pl, stages, wonNames, lostNames), 'sbt-' + sid(pl));
+
+  const timeData = computeTime(filtered, pl, stages);
+  const hvEl = document.getElementById('hv-' + sid(pl));
+  if (hvEl) hvEl.textContent = timeData.filter(t=>t.highVar).length > 0
+    ? `⚠ ${timeData.filter(t=>t.highVar).length} high-variance stage${timeData.filter(t=>t.highVar).length>1?'s':''}`
+    : '';
+  setTimeout(() => renderTimeChart(timeData, 'c-' + sid(pl)), 10);
+}
+
+// ─────────────────────────────────────────────
 // SWITCH TAB
 // ─────────────────────────────────────────────
 function switchTab(pl) {
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.pl-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.pl-section').forEach(s => s.classList.remove('active'));
   const tb = document.getElementById('tab-'+sid(pl));
   const sc = document.getElementById('pl-'+sid(pl));
-  if(tb) tb.classList.add('active');
-  if(sc) sc.classList.add('active');
-  if (_pipelineStats[pl]) renderSummaryCards(_pipelineStats[pl], pl);
-  if (_pipelineSpotlight.hasOwnProperty(pl)) renderStoreCard(_pipelineSpotlight[pl]);
+  if (tb) tb.classList.add('active');
+  if (sc) sc.classList.add('active');
 }
 
 // ─────────────────────────────────────────────
@@ -809,93 +841,119 @@ function analyzeData(rows, headers, fileName) {
       if (!plNames.length) throw new Error('No pipeline stages detected. Check CSV format.');
 
       const { deals, noHistory, unknownStages } = buildDeals(rows, schema);
+      _schema = schema;
+      _allDeals = deals;
 
       // Quality issues
       const issues = [];
-      if (noHistory>0) issues.push(`${noHistory} deal(s) had no stage-entry history and are excluded from funnel metrics.`);
-      if (unknownStages.size>0) issues.push(`${unknownStages.size} unrecognized Deal Stage value(s): ${[...unknownStages].slice(0,6).join(', ')}${unknownStages.size>6?'…':''}.`);
+      if (noHistory > 0) issues.push(`${noHistory} deal(s) had no stage-entry history and are excluded from funnel metrics.`);
+      if (unknownStages.size > 0) issues.push(`${unknownStages.size} unrecognized Deal Stage value(s): ${[...unknownStages].slice(0,6).join(', ')}${unknownStages.size>6?'…':''}.`);
       const thinStages = [];
       for (const [pl, stages] of Object.entries(schema.pipelines)) {
         for (const s of stages) {
-          const n = deals.filter(d=>d.stages[`${s} (${pl})`]).length;
-          if (n>0&&n<5) thinStages.push(`${s} (n=${n})`);
+          const n = deals.filter(d => d.stages[`${s} (${pl})`]).length;
+          if (n > 0 && n < 5) thinStages.push(`${s} (n=${n})`);
         }
       }
-      if (thinStages.length) issues.push(`Low sample stages (n<5) — metrics may be unreliable: ${thinStages.slice(0,4).join(', ')}${thinStages.length>4?'…':''}.`);
+      if (thinStages.length) issues.push(`Low sample stages (n<5): ${thinStages.slice(0,4).join(', ')}${thinStages.length>4?'…':''}.`);
 
-      // Blended totals for file info bar only
-      _pipelineStats['all'] = summaryStats(deals, schema);
       renderQuality(issues);
 
-      // Tabs (first pipeline active by default)
+      // Tabs
       document.getElementById('tabs').innerHTML = plNames.map((pl, i) =>
         `<button class="tab-btn${i===0?' active':''}" id="tab-${sid(pl)}" onclick="switchTab('${esc(pl).replace(/'/g,"\\'")}')">${esc(pl)}</button>`
       ).join('');
 
-      // Pipeline sections
       const sectionsEl = document.getElementById('pl-sections');
       sectionsEl.innerHTML = '';
 
       plNames.forEach((pl, idx) => {
+        _plDateFilter[pl] = 'all';
         const stages = schema.pipelines[pl];
         const { wonNames, lostNames } = schema;
-        _pipelineStats[pl] = summaryStatsForPipeline(deals, pl, schema);
-        const funnelData = computeFunnel(deals, pl, stages, wonNames, lostNames);
-        const timeData   = computeTime(deals, pl, stages);
-        const { sigs, storeCard: plSc } = computeSignals(deals, pl, stages, wonNames, lostNames, schema);
-        // Spotlight belongs to the pipeline that contains the store stage
-        _pipelineSpotlight[pl] = (schema.storeStage?.pipeline === pl) ? plSc : null;
-        const staleData  = computeStale(deals, pl, stages, wonNames, lostNames);
-        const hvCount    = timeData.filter(t=>t.highVar).length;
-        const totalAlert = staleData.reduce((s,t)=>s+t.over,0);
+        const allPlDeals = filterDealsForPipeline(deals, pl, schema, 'all');
 
-        const fid  = 'f-'+sid(pl);
-        const cid  = 'c-'+sid(pl);
-        const sgid = 's-'+sid(pl);
-        const stid = 'st-'+sid(pl);
+        // Stale is always computed from all-time data
+        const staleData  = computeStale(deals, pl, stages, wonNames, lostNames);
+        const totalAlert = staleData.reduce((s,t) => s+t.over, 0);
+        const timeData   = computeTime(allPlDeals, pl, stages);
+        const hvCount    = timeData.filter(t => t.highVar).length;
+
+        const pid  = sid(pl);
+        const safepl = esc(pl).replace(/'/g,"\\'");
+        const filterBtns = ['all','year','q1','q2','q3','q4'].map(r =>
+          `<button class="filter-btn${r==='all'?' active':''}" data-range="${r}" onclick="applyDateFilter('${safepl}','${r}')">${
+            r==='all'?'All Time':r==='year'?'This Year':r.toUpperCase()
+          }</button>`
+        ).join('');
 
         const div = document.createElement('div');
-        div.className = idx===0 ? 'pl-section active' : 'pl-section';
-        div.id = 'pl-'+sid(pl);
+        div.className = idx === 0 ? 'pl-section active' : 'pl-section';
+        div.id = 'pl-' + pid;
         div.innerHTML = `
+          <!-- LAYER 1 -->
           <div class="card">
-            <div class="card-title">Funnel Conversion Rates</div>
-            <div class="card-sub">Bar width = deal volume. % shows advance rate toward closed won. Drop-off % shown between stages.</div>
-            <div id="${fid}"></div>
+            <div class="layer-tag">Layer 1 — Pipeline Summary</div>
+            <div class="card-header-row">
+              <div class="card-header-left">
+                <div class="card-title">${esc(pl)}</div>
+                <div class="card-sub" style="margin-bottom:0">Closed Won and Closed Lost are outcomes, not stages. Win Rate = Won ÷ (Won + Lost) only.</div>
+              </div>
+              <div class="date-filter-row">
+                <span class="filter-lbl">Date range:</span>
+                ${filterBtns}
+              </div>
+            </div>
+            <div id="ps-${pid}"></div>
           </div>
+
+          <!-- LAYER 2 -->
           <div class="card">
-            <div class="card-title">Median Time Per Stage ${hvCount?`<span class="b-warn">⚠ ${hvCount} high-variance stage${hvCount>1?'s':''}</span>`:''}</div>
-            <div class="card-sub">Median days in each stage (exit date − entry date). Amber = IQR > 2× median. Hover bars for detail.</div>
-            <div class="chart-outer" style="height:${Math.max(180,timeData.length*38+40)}px"><canvas id="${cid}"></canvas></div>
+            <div class="layer-tag">Layer 2 — Stage Breakdown</div>
+            <div class="card-title">Funnel Conversion</div>
+            <div class="card-sub">Bar width = deal volume. % = advance rate toward Closed Won. Closed Won/Lost are outcomes shown only as final results.</div>
+            <div id="f-${pid}"></div>
+
+            <div class="sub-section">
+              <div class="sub-title">Stage Detail Table</div>
+              <div class="sub-sub">Per-stage conversion, loss rate, time, and current active deals. Excludes Closed Won/Lost (outcomes, not stages).</div>
+              <div id="sbt-${pid}"></div>
+            </div>
+
+            <div class="sub-section">
+              <div class="sub-title">Median Time Per Stage <span id="hv-${pid}" style="font-size:.72rem;color:#92400e;background:#fef3c7;padding:2px 7px;border-radius:100px;font-weight:600"></span></div>
+              <div class="sub-sub">Median days in each stage (exit − entry). Amber = high variance (IQR > 2× median). Hover for detail.</div>
+              <div class="chart-outer" style="height:${Math.max(180, timeData.length*38+40)}px"><canvas id="c-${pid}"></canvas></div>
+            </div>
           </div>
+
+          <!-- LAYER 3 -->
           <div class="card">
-            <div class="card-title">Key Conversion Signals</div>
-            <div class="card-sub">Win rate (% that eventually close won) by stage. "Key Inflection" marks stages where win rate jumps >15 points — strongest predictors of a closed deal.</div>
-            <div id="${sgid}"></div>
-          </div>
-          <div class="card">
-            <div class="card-title">Stale Deal Thresholds ${totalAlert?`<span class="b-danger">${totalAlert} active deal${totalAlert>1?'s':''} flagged</span>`:''}</div>
-            <div class="card-sub">Threshold = 75th percentile of days lost deals spent at each stage. Active deals past this point are flagged.</div>
-            <div id="${stid}"></div>
+            <div class="layer-tag">Layer 3 — Stale &amp; At Risk</div>
+            <div class="card-title">Stale Deal Thresholds ${totalAlert ? `<span class="b-danger">${totalAlert} active deal${totalAlert>1?'s':''} flagged</span>` : ''}</div>
+            <div class="card-sub">Threshold = 75th percentile of days lost deals spent at each stage. Click the at-risk count to see deal names. Based on all-time data.</div>
+            <div id="st-${pid}"></div>
           </div>`;
+
         sectionsEl.appendChild(div);
 
-        renderFunnel(funnelData, fid);
-        renderSignals(sigs, sgid);
-        renderStale(staleData, stid, pl);
-        setTimeout(() => renderTimeChart(timeData, cid), 10);
+        // Initial render (unfiltered)
+        renderPipelineSummary(computePipelineSummary(allPlDeals, pl, schema), pl);
+        renderFunnel(computeFunnel(allPlDeals, pl, stages, wonNames, lostNames), 'f-' + pid);
+        renderStageBreakdown(computeStageBreakdown(allPlDeals, pl, stages, wonNames, lostNames), 'sbt-' + pid);
+        renderStale(staleData, 'st-' + pid, pl);
+        if (hvCount > 0) {
+          const hvEl = document.getElementById('hv-' + pid);
+          if (hvEl) hvEl.textContent = `⚠ ${hvCount} high-variance stage${hvCount>1?'s':''}`;
+        }
+        setTimeout(() => renderTimeChart(timeData, 'c-' + pid), 10);
       });
 
-      // Render summary cards + spotlight for first pipeline (after loop so _pipelineStats is populated)
-      renderSummaryCards(_pipelineStats[plNames[0]], plNames[0]);
-      renderStoreCard(_pipelineSpotlight[plNames[0]]);
-
-      // Build benchmark lookups for deal analyzer
-      _allDeals = deals;
-      _stageMedians = {};
-      _stageThresholds = {};
+      // Build benchmark lookups for deal analyzer (always all-time)
       _wonNames  = schema.wonNames;
       _lostNames = schema.lostNames;
+      _stageMedians = {};
+      _stageThresholds = {};
       for (const [plName, stages] of Object.entries(schema.pipelines)) {
         for (const t of computeTime(deals, plName, stages)) {
           _stageMedians[`${t.stage} (${plName})`] = t.median;
@@ -907,10 +965,12 @@ function analyzeData(rows, headers, fileName) {
       populateDealSearch(deals);
 
       // File info bar
+      const allWon  = deals.filter(d => d.outcome==='won').length;
+      const allLost = deals.filter(d => d.outcome==='lost').length;
       document.getElementById('file-info').innerHTML =
-        `<strong>${esc(fileName)}</strong> &nbsp;·&nbsp; ${deals.length.toLocaleString()} deals &nbsp;·&nbsp; ${_pipelineStats['all'].won} won &nbsp;·&nbsp; ${_pipelineStats['all'].lost} lost &nbsp;·&nbsp; ${plNames.length} pipeline${plNames.length!==1?'s':''} detected`;
+        `<strong>${esc(fileName)}</strong> &nbsp;·&nbsp; ${deals.length.toLocaleString()} deals &nbsp;·&nbsp; ${allWon} won &nbsp;·&nbsp; ${allLost} lost &nbsp;·&nbsp; ${plNames.length} pipeline${plNames.length!==1?'s':''} detected`;
 
-      document.getElementById('loading').style.display = 'none';
+      document.getElementById('loading').style.display   = 'none';
       document.getElementById('dashboard').style.display = 'block';
 
     } catch(err) {
@@ -927,9 +987,9 @@ function analyzeData(rows, headers, fileName) {
 // ─────────────────────────────────────────────
 function handleFile(file) {
   if (!file?.name.toLowerCase().endsWith('.csv')) { alert('Please upload a .csv file.'); return; }
-  document.getElementById('upload-zone').style.display = 'none';
-  document.getElementById('dashboard').style.display = 'none';
-  document.getElementById('loading').style.display = 'block';
+  document.getElementById('upload-zone').style.display  = 'none';
+  document.getElementById('dashboard').style.display    = 'none';
+  document.getElementById('loading').style.display      = 'block';
   Papa.parse(file, {
     header:true, skipEmptyLines:true,
     complete: r => analyzeData(r.data, r.meta.fields||[], file.name),
@@ -938,22 +998,21 @@ function handleFile(file) {
 }
 
 function resetTool() {
-  Object.values(_charts).forEach(c=>c.destroy()); _charts={};
-  _allDeals=[]; _searchDeals=[]; _stageMedians={}; _stageThresholds={}; _wonNames=new Set(); _lostNames=new Set();
-  _pipelineStats={}; _pipelineSpotlight={};
-  ['dashboard','loading'].forEach(id=>document.getElementById(id).style.display='none');
-  document.getElementById('upload-zone').style.display='block';
-  document.getElementById('file-input').value='';
-  ['pl-sections','summary-cards','tabs','quality-wrap','store-wrap','da-detail'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerHTML='';});
+  Object.values(_charts).forEach(c => c.destroy()); _charts = {};
+  _allDeals=[]; _searchDeals=[]; _stageMedians={}; _stageThresholds={};
+  _wonNames=new Set(); _lostNames=new Set(); _schema=null; _plDateFilter={};
+  ['dashboard','loading'].forEach(id => document.getElementById(id).style.display='none');
+  document.getElementById('upload-zone').style.display = 'block';
+  document.getElementById('file-input').value = '';
+  ['pl-sections','tabs','quality-wrap','da-detail'].forEach(id => { const e=document.getElementById(id); if(e) e.innerHTML=''; });
   const inp=document.getElementById('da-input'); if(inp) inp.value='';
   const drop=document.getElementById('da-dropdown'); if(drop){drop.innerHTML='';drop.classList.remove('open');}
   const cnt=document.getElementById('da-count'); if(cnt) cnt.textContent='';
 }
 
 // ─────────────────────────────────────────────
-// DEAL ANALYZER
+// LAYER 4 — DEAL ANALYZER
 // ─────────────────────────────────────────────
-
 function dealStageStatus(days, med, thresh) {
   if (thresh != null && days > thresh) return 'stale';
   if (med == null) return 'no-bench';
@@ -967,7 +1026,7 @@ function isTerminalStage(stageName) {
 }
 
 function populateDealSearch(deals) {
-  _searchDeals = [...deals].sort((a,b)=>(a.name||'').localeCompare(b.name||''));
+  _searchDeals = [...deals].sort((a,b) => (a.name||'').localeCompare(b.name||''));
   const input = document.getElementById('da-input');
   const drop  = document.getElementById('da-dropdown');
   const cnt   = document.getElementById('da-count');
@@ -977,20 +1036,20 @@ function populateDealSearch(deals) {
   function showMatches(term) {
     const t = term.toLowerCase();
     const matches = t
-      ? _searchDeals.filter(d=>(d.name||'').toLowerCase().includes(t)).slice(0,30)
+      ? _searchDeals.filter(d => (d.name||'').toLowerCase().includes(t)).slice(0,30)
       : _searchDeals.slice(0,30);
     if (!matches.length) {
       drop.innerHTML='<div class="da-item" style="color:var(--muted);cursor:default;justify-content:center">No matches</div>';
     } else {
-      drop.innerHTML = matches.map((d,i)=>
+      drop.innerHTML = matches.map((d,i) =>
         `<div class="da-item" data-i="${i}">
            <span class="da-item-name">${esc(d.name||'(unnamed)')}</span>
            <span class="da-item-stage">${esc(d.cur||'—')}</span>
          </div>`
       ).join('');
-      drop.querySelectorAll('.da-item[data-i]').forEach(el=>{
+      drop.querySelectorAll('.da-item[data-i]').forEach(el => {
         const deal = matches[+el.dataset.i];
-        el.addEventListener('mousedown', e=>{
+        el.addEventListener('mousedown', e => {
           e.preventDefault();
           input.value = deal.name||'';
           drop.classList.remove('open');
@@ -1001,31 +1060,29 @@ function populateDealSearch(deals) {
     drop.classList.add('open');
   }
 
-  input.addEventListener('input',  ()=>showMatches(input.value));
-  input.addEventListener('focus',  ()=>showMatches(input.value));
-  input.addEventListener('blur',   ()=>setTimeout(()=>drop.classList.remove('open'), 150));
-  input.addEventListener('keydown', e=>{ if(e.key==='Escape'){drop.classList.remove('open');input.blur();} });
+  input.addEventListener('input',   () => showMatches(input.value));
+  input.addEventListener('focus',   () => showMatches(input.value));
+  input.addEventListener('blur',    () => setTimeout(() => drop.classList.remove('open'), 150));
+  input.addEventListener('keydown', e  => { if(e.key==='Escape'){drop.classList.remove('open');input.blur();} });
 }
 
 function renderDealDetail(deal) {
-  const el = document.getElementById('da-detail');
+  const el  = document.getElementById('da-detail');
   const now = Date.now();
 
-  // Build chronological stage history
   const history = Object.entries(deal.stages)
-    .filter(([,s])=>s.entered)
-    .map(([key, s])=>{
+    .filter(([,s]) => s.entered)
+    .map(([key, s]) => {
       const m = key.match(/^(.+) \(([^)]+)\)$/);
       const stageName = m ? m[1] : key;
       const pipeline  = m ? m[2] : '';
       const terminal  = isTerminalStage(stageName);
       const isCurrent = !s.exited && deal.outcome==='active';
-      // Terminal stages with no exit date: don't count days-from-now
       let days;
       if (terminal && !s.exited) days = null;
       else if (s.days != null)   days = s.days;
       else if (isCurrent)        days = (now - s.entered.getTime())/86400000;
-      else                       days = null; // data gap
+      else                       days = null;
       const med    = terminal ? null : (_stageMedians[key] ?? null);
       const thresh = terminal ? null : (_stageThresholds[key] ?? null);
       const status = terminal
@@ -1034,16 +1091,15 @@ function renderDealDetail(deal) {
       return { key, stageName, pipeline, entered:s.entered, exited:s.exited,
                days, med, thresh, isCurrent, terminal, status };
     })
-    .sort((a,b)=>a.entered-b.entered);
+    .sort((a,b) => a.entered-b.entered);
 
   if (!history.length) {
     el.innerHTML='<div class="empty">No stage history found for this deal.</div>'; return;
   }
 
-  const cur         = history.find(h=>h.isCurrent) || history[history.length-1];
+  const cur         = history.find(h => h.isCurrent) || history[history.length-1];
   const curDaysSufx = cur.days != null ? ` — ${Math.round(cur.days)}d` : '';
 
-  // ── Header ──
   let html = `<div class="da-header">
     <div>
       <h3>${esc(deal.name||'(unnamed)')}</h3>
@@ -1053,17 +1109,16 @@ function renderDealDetail(deal) {
     ${deal.amount ? `<div style="text-align:right"><div style="font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:3px">Deal Value</div><div style="font-size:1.25rem;font-weight:700">$${Number(deal.amount).toLocaleString()}</div></div>` : ''}
   </div>`;
 
-  // ── Timeline ──
   html += '<div class="tl-outer"><div class="tl-row">';
-  history.forEach((h, i)=>{
-    const cls   = [h.status, h.isCurrent?'current':''].filter(Boolean).join(' ');
-    const abbr  = h.stageName.length>17 ? h.stageName.slice(0,15)+'…' : h.stageName;
-    const dLbl  = h.days == null ? '—' : h.days < 1 ? '<1d' : Math.round(h.days)+'d';
-    const sLbl  = STATUS_LABEL[h.status]||'';
-    const tip   = `${h.stageName} (${h.pipeline})`
-                + (h.days != null ? `&#10;${dLbl} spent` : '')
-                + (h.med!=null ? `&#10;Median: ${Math.round(h.med)}d` : '')
-                + (h.thresh!=null ? `&#10;Flag at: ${Math.round(h.thresh)}d` : '');
+  history.forEach((h, i) => {
+    const cls  = [h.status, h.isCurrent?'current':''].filter(Boolean).join(' ');
+    const abbr = h.stageName.length>17 ? h.stageName.slice(0,15)+'…' : h.stageName;
+    const dLbl = h.days == null ? '—' : h.days < 1 ? '<1d' : Math.round(h.days)+'d';
+    const sLbl = STATUS_LABEL[h.status]||'';
+    const tip  = `${h.stageName} (${h.pipeline})`
+               + (h.days!=null ? `&#10;${dLbl} spent` : '')
+               + (h.med!=null  ? `&#10;Median: ${Math.round(h.med)}d` : '')
+               + (h.thresh!=null ? `&#10;Flag at: ${Math.round(h.thresh)}d` : '');
     html += `<div class="tl-node">
       <div class="tl-box ${cls}" title="${tip}">
         <div class="tl-sname">${esc(abbr)}</div>
@@ -1076,12 +1131,10 @@ function renderDealDetail(deal) {
   });
   html += '</div></div>';
 
-  // ── Detail table ──
   html += `<div class="da-table-wrap"><table><thead><tr>
     <th>Stage</th><th>Pipeline</th><th>Entered</th><th>Exited</th>
     <th>Days Spent</th><th>Benchmark Median</th><th>Δ vs Median</th><th>Status</th>
   </tr></thead><tbody>`;
-
   for (const h of history) {
     const dStr    = h.days == null ? '—' : h.days < 1 ? '<1d' : Math.round(h.days)+'d';
     const mStr    = (!h.terminal && h.med != null) ? Math.round(h.med)+'d' : '—';
@@ -1101,7 +1154,6 @@ function renderDealDetail(deal) {
       <td><span style="font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:100px;background:${sc}">${STATUS_LABEL[h.status]||'—'}</span></td>
     </tr>`;
   }
-
   html += '</tbody></table></div>';
   el.innerHTML = html;
 }
@@ -1121,7 +1173,7 @@ function showAtRiskPopup(btn) {
     const sd = d.stages[key];
     if (!sd?.entered || sd.exited) return false;
     return (now - sd.entered.getTime()) / 86400000 > thresh;
-  }).map(d => d.name || '(unnamed)').sort((a,b)=>a.localeCompare(b));
+  }).map(d => d.name || '(unnamed)').sort((a,b) => a.localeCompare(b));
 
   const popup = document.getElementById('at-risk-popup');
   const list  = document.getElementById('at-risk-popup-list');
@@ -1129,14 +1181,13 @@ function showAtRiskPopup(btn) {
     ? names.map(n => `<div style="padding:5px 0;border-bottom:1px solid #f1f5f9;font-size:.83rem;color:var(--text)">${esc(n)}</div>`).join('')
     : '<div style="color:var(--muted);font-size:.83rem">No deals found</div>';
 
-  // Position near button, stay within viewport
   const rect = btn.getBoundingClientRect();
   popup.style.display = 'block';
   let top  = rect.bottom + 6;
   let left = rect.left;
   const pw = 300, ph = Math.min(320, names.length * 31 + 56);
   if (top + ph > window.innerHeight - 8)  top  = rect.top - ph - 6;
-  if (left + pw > window.innerWidth - 8)  left = window.innerWidth - pw - 8;
+  if (left + pw > window.innerWidth  - 8) left = window.innerWidth - pw - 8;
   if (left < 8) left = 8;
   popup.style.top  = top  + 'px';
   popup.style.left = left + 'px';
@@ -1149,16 +1200,16 @@ document.getElementById('file-input').addEventListener('change', e => { if(e.tar
 
 document.addEventListener('click', e => {
   const popup = document.getElementById('at-risk-popup');
-  if (popup.style.display === 'block' && !popup.contains(e.target) && !e.target.closest('.at-risk-btn')) {
+  if (popup.style.display==='block' && !popup.contains(e.target) && !e.target.closest('.at-risk-btn')) {
     popup.style.display = 'none';
   }
 });
 
 const zone = document.getElementById('upload-zone');
-zone.addEventListener('click', () => document.getElementById('file-input').click());
-zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+zone.addEventListener('click',    () => document.getElementById('file-input').click());
+zone.addEventListener('dragover',  e => { e.preventDefault(); zone.classList.add('over'); });
 zone.addEventListener('dragleave', () => zone.classList.remove('over'));
-zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('over'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+zone.addEventListener('drop',      e => { e.preventDefault(); zone.classList.remove('over'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
 </script>
 </body>
 </html>
